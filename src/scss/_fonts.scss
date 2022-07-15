@@ -1,0 +1,61 @@
+// <link rel="preconnect" href="https://fonts.googleapis.com">
+// <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+// <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('./fonts/Raleway-Light.ttf');
+  src: local('./fonts/Raleway Light'), local('Raleway-Light'),
+    url('./fonts/Raleway-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Raleway';
+  src: url('./fonts/Raleway-Regular.ttf');
+  src: local('./fonts/Raleway Regular'), local('Raleway-Regular'),
+    url('./fonts/Raleway-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Raleway';
+  src: url('./fonts/Raleway-SemiBold.ttf');
+  src: local('./fonts/Raleway SemiBold'), local('Raleway-SemiBold'),
+    url('./fonts/Raleway-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Raleway';
+  src: url('./fonts/Raleway-Bold.ttf');
+  src: local('./fonts/Raleway Bold'), local('Raleway-Bold'),
+    url('./fonts/Raleway-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// @font-face {
+//   font-family: 'Proxima Nova';
+//   src: url('./fonts/ProximaNova-Bold.eot');
+//   src: local('./fonts/Proxima Nova Bold'), local('ProximaNova-Bold'),
+//     url('./fonts/ProximaNova-Bold.eot?#iefix') format('embedded-opentype'),
+//     url('./fonts/ProximaNova-Bold.woff') format('woff'),
+//     url('./fonts/ProximaNova-Bold.ttf') format('truetype');
+//   font-weight: bold;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'Proxima Nova';
+//   src: url('./fonts/ProximaNova-Regular.eot');
+//   src: local('./fonts/Proxima Nova Regular'), local('ProximaNova-Regular'),
+//     url('./fonts/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
+//     url('./fonts/ProximaNova-Regular.woff') format('woff'),
+//     url('./fonts/ProximaNova-Regular.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+
+  
