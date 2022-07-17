@@ -19,7 +19,7 @@ class ModalCart extends Component {
   state = {};
 
   componentDidMount() {
-    // console.log("mounted", this.props);
+    // console.log("mounted", this.props.items);
   }
   componentDidUpdate() {
     // console.log("updated", this.props);
@@ -31,11 +31,13 @@ class ModalCart extends Component {
         <div className="modal__content">
           <div className="modal__header">
             <p>My bag, </p>
-            <p>3 items</p>
+            <p>{this.props.items.length} items</p>
           </div>
-          {this.props.items.map((item) => (
-            <ModalCartItem key={item.id} {...item} />
-          ))}
+          <div className="modal__products">
+            {this.props.items.map((item) => (
+              <ModalCartItem key={item.id} {...item} />
+            ))}
+          </div>
 
           <div className="modal__content-info">
             <p>Total</p>

@@ -1,0 +1,64 @@
+.modal{
+    position: absolute;
+    max-width: 1440px;
+    min-width: 1440px;
+    min-height: 1435px;
+    max-height: 1435px;
+    left: 0;
+    top: 78px;
+    z-index: 6;
+    background: rgba(57, 55, 72, 0.22);
+
+    &__header{
+        display: flex;
+    }
+
+    &__content{
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 32px 16px;
+        gap: 32px;
+        z-index: 6;
+        position: absolute;
+        min-width: 325px;
+        max-width: 325px;
+        max-height: 677px;
+        left: 1000px;
+        top: 0;
+        background: #FFFFFF;
+
+        &-info{
+            display: flex;
+            
+            p{
+                padding: 0 13px;  // fix
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 18px;
+            }
+        }
+
+        &-bottom{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0;
+            gap: 12px;
+
+            max-width: 292px;
+            max-height: 43px;
+
+            
+        }
+        
+    }
+    &__products{
+        overflow: scroll;
+    }
+}
+
+

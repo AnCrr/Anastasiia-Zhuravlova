@@ -1,4 +1,3 @@
-import "./App.css";
 import "./scss/app.scss";
 import { Routes, Route } from "react-router-dom";
 

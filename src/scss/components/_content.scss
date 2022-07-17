@@ -1,0 +1,108 @@
+.content{
+    display: flex;
+    
+    &__products {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        top: 253px;
+        left: 50px;
+        // justify-content: space-around;
+    
+        &__block{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 16px;
+            max-width: 386px;
+            max-height: 444px;
+            margin: 0 15px;
+            &.unactive{
+                opacity: 60%;
+
+                &:hover{
+                    .content__products__block-icon {
+                        display: none;
+                    }
+                }
+            }
+    
+            &-image{
+                //  position: absolute;
+                // max-width: 354px;
+                // max-height: 330px;
+                // background: #C4C4C4;
+                 img{
+                    // position: absolute;
+                    // min-width: 354px;
+                    min-height: 330px;
+                    max-width: 354px;
+                    max-height: 330px;
+                }
+
+                p{
+                    position: absolute;
+                    left: 4.5em;
+                    top: 165px;
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 160%;
+                    color: #8D8F9A;
+                }
+            }
+
+            &-icon{
+                cursor: pointer;
+                position: absolute;
+                max-width: 52px;
+                max-height: 52px;
+                right: 31px;   
+                bottom: 72px;
+                display: none;
+            }
+    
+            &-info{
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                //align-items: flex-start;
+                padding: 0;
+                //align-self: stretch;
+                width: 354px;
+                height: 58px;
+            }
+    
+            &-title{
+                width: 354px;
+                height: 29px;
+                font-style: normal;
+                font-weight: 300;
+                font-size: 18px;
+                line-height: 160%;
+                
+            }
+    
+            &-price{
+                display: flex;
+                font-weight: 600;
+                //flex-direction: column;
+                align-items: center;
+                padding: 0;
+                width: 58px;
+                height: 29px;
+            }
+
+            &:hover{
+                box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
+
+                .content__products__block-icon {
+                    display: block;
+                }
+            }
+        }
+}
+
+}

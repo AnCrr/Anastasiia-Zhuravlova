@@ -1,0 +1,68 @@
+.header {
+    position: absolute;
+    width: 1440px;
+    height: 80px;
+    left: 0;
+    top: 0;
+
+    &__navigation{
+        display: flex;
+        align-items: center;
+        //padding: 0;
+        
+        max-width: 234px;
+        max-height: 56px;
+
+                & span{
+                    cursor: pointer;
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    align-items: flex-end;
+                    //padding: 0px;
+                    
+                    width: 97px;
+                    height: 56px;
+                    
+                &.active{
+                    color: $green;
+                    border-bottom: 1px solid $green;
+                }
+                    
+
+    }
+    }
+    &__logo{
+        position: absolute;
+        width: 41px;
+        height: 41px;
+        left: 699px;
+        top: calc(50% - 41px/2 + 4.5px);
+    }
+
+    &__cart{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0;
+        gap: 22px;
+
+        position: absolute;
+        min-width: 204px;
+        min-height: 40px;
+        max-width: 204px;
+        max-height: 40px;
+        right: 101px;
+        top: 23px;
+
+        &-actions{
+            position: relative;
+            min-width: 156px;
+            min-height: 40px;
+            max-width: 156;
+            max-height: 40px;
+        }
+
+    }
+
+}

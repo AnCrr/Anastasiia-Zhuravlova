@@ -1,0 +1,87 @@
+.select{
+    position: absolute;
+    top: 0;
+    right: 200px;
+    &__label{
+            min-width: 38px;
+            min-height: 29px;
+            max-width: 38px;
+            max-height: 29px;
+        
+            & span{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-end;
+                padding: 0 10px;
+                gap: 12px;
+                position: absolute;
+                min-width: 32px;
+                min-height: 29px;
+                max-width: 32px;
+                max-height: 29px;
+                left: 145px;
+                top: -1px;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 160%;
+                color: $black;
+                cursor: pointer;
+            }
+        
+            & svg{
+                position: absolute;
+                left: 480%;
+                // right: 15%;
+                top: 47%;
+                bottom: 31.25%;
+        
+                // border: 1px solid #000000;
+                transform: matrix(1, 0, 0, -1, 0, 0);
+        
+                
+            }
+        }
+
+        &__popup{
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            top: 148%;
+            left: 350%;
+            box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+            // display: flex;
+            text-align: left;
+            font-weight: 500;
+            font-size: 18px;
+            // justify-content:flex-start;
+            min-width: 114px;
+            min-height: 169px;
+            max-width: 114px;
+            max-height: 169px;
+            // left: 1248px;
+            // top: 65px;
+            //   overflow: hidden;
+            ul{ 
+                
+                li{
+                    list-style-type:none;
+                    cursor: pointer;
+                    min-width: 114px;
+                    min-height: 27px;
+                    max-width: 114px;
+                    max-height: 45px;
+
+                    &:hover {
+                        background: rgba(36, 36, 36, 0.05);
+                      }
+              
+                      &.active {
+                        font-weight: bold;
+                        color: rgba(36, 36, 36, 0.05);
+                      }
+                }
+            }
+        }
+    }

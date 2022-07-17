@@ -13,6 +13,10 @@ const productsFields = [
 
 const currencyList = ["label", "symbol"];
 
+const attrList = ["name", "type"];
+
+const attrItemsList = ["displayValue", "value"];
+
 // export const getCat = async () => {
 //   const query = new Query("categories", true)
 //     .addField("name")
@@ -35,6 +39,11 @@ export const fetchProductsData = (title) => {
           new Field("prices")
             .addField("amount")
             .addField(new Field("currency").addFieldList(currencyList))
+        )
+        .addField(
+          new Field("attributes")
+            .addFieldList(attrList)
+            .addField(new Field("items").addFieldList(attrItemsList))
         )
     );
   return client.post(query);

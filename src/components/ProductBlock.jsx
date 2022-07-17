@@ -21,9 +21,7 @@ class ProductBlock extends Component {
     id: this.props.product.id,
   };
 
-  componentDidMount() {
-    // console.log(this.state.props);
-  }
+  componentDidMount() {}
 
   handleAddItem = () => {
     this.props.addItem(this.props.product);
