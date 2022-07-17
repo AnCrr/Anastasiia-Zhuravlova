@@ -51,7 +51,7 @@ class Select extends Component {
   componentWillUnmount() {
     return () => {
       document.body.removeEventListener("click", this.handleClickOutside);
-    };
+    }; //do I need return?
   }
 
   render() {

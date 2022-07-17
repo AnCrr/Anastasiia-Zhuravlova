@@ -1,12 +1,29 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "@reduxjs/toolkit";
 
 import Categories from "./Categories";
 import Select from "./Select";
+import { openModal } from "../redux/cart/slice";
+import { cartSelector } from "../redux/cart/selectors";
+
+const mapStateToProps = (state) => ({
+  opened: cartSelector(state).opened,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  openModal: bindActionCreators(openModal, dispatch),
+});
 
 class Header extends Component {
-  handleOpenModal = () => {
-    console.log(this.props.opened);
+  state = {
+    isModalOpen: false,
   };
+
+  handleOpenModal = () => {
+    this.props.openModal(!this.props.opened);
+  };
+
   render() {
     return (
       <div className="header">
@@ -67,24 +84,11 @@ class Header extends Component {
                 <div className="--spacer-xl"></div>
                 <div className="--spacer-xl"></div>
                 <Select />
-                {/* <p className="button--label">$</p> */}
-                {/* <svg
-                className="button-arrow"
-                xmlns="http://www.w3.org/2000/svg"
-                width="8"
-                height="4"
-                viewBox="0 0 8 4"
-                fill="none"
-              >
-                <path
-                  d="M1 0.5L4 3.5L7 0.5"
-                  stroke="black"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg> */}
               </div>
-              <div className="button button--cart">
+              <div
+                onClick={() => this.handleOpenModal()}
+                className="button button--cart"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -109,9 +113,10 @@ class Header extends Component {
             </div>
           </div>
         </div>
+        {/* {this.state.isModalOpen && <DanModal>DanModal</DanModal>} */}
       </div>
     );
   }
 }
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

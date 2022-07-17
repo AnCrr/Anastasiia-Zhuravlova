@@ -3,28 +3,33 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
 
 import { filterSelector } from "../redux/filter/selectors";
+import { addItem } from "../redux/cart/slice";
 
 const mapStateToProps = (state) => ({
   currency: filterSelector(state).currency,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   setCurrency: bindActionCreators(setCurrency, dispatch),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  addItem: bindActionCreators(addItem, dispatch),
+});
 
 class ProductBlock extends Component {
   state = {
     name: this.props.product.name,
     gallery: this.props.product.gallery,
     price: this.props.product.prices,
+    id: this.props.product.id,
   };
 
   componentDidMount() {
     // console.log(this.state.props);
   }
 
+  handleAddItem = () => {
+    this.props.addItem(this.props.product);
+  };
+
   render() {
-    console.log(this.props.product.inStock);
     return (
       <div
         ref={this.ref}
@@ -40,6 +45,7 @@ class ProductBlock extends Component {
           {/* make constant */}
           <img src={this.state.gallery[0]} alt="product" />
           <svg
+            onClick={() => this.handleAddItem()}
             className="content__products__block-icon"
             xmlns="http://www.w3.org/2000/svg"
             width="52"
@@ -84,4 +90,4 @@ class ProductBlock extends Component {
   }
 }
 
-export default connect(mapStateToProps, {})(ProductBlock);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductBlock);

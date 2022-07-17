@@ -79,31 +79,6 @@ body {
         right: 101px;
         top: 23px;
 
-        // &-select{
-        //     align-items: center;
-        //     font-family: 'Raleway';
-        //     font-style: normal;
-        //     font-weight: 500;
-        //     font-size: 18px;
-        //     line-height: 160%;
-        //     display: flex;
-        //     flex-direction: row;
-        //     justify-content: center;
-        //     //align-items: flex-end;
-        //     // padding: 0px 10px;
-        //     border: none;
-        //     text-decoration: none;
-        //     gap: 12px;
-    
-        //     position: absolute;
-        //     min-width: 32px;
-        //     min-height: 29px;
-        //     left: 124px;
-        //     top: 5.5px;
-
-            
-        // }
-
         &-actions{
             position: relative;
             min-width: 156px;
@@ -142,7 +117,30 @@ body {
         left: 80%;
         right: 0%;
         top: 5.84%;
-        //bottom: 4.16%;
+        cursor: pointer;
+    }
+
+    &--modal{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 32px;
+        width: 140px;
+        height: 43px;
+        border: 1px solid #1D1F22;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 120%;
+        cursor: pointer;
+
+        &--check{
+            background-color: $green;
+            color: white;
+            border: none;
+        }
     }
 }
 
@@ -166,17 +164,15 @@ h2{
 }
 
 .content{
-    display: block;
+    display: flex;
+    
     &__products {
         position: relative;
         display: flex;
         flex-wrap: wrap;
         top: 253px;
         left: 50px;
-         justify-content: flex-start;
-        justify-items: flex-start;
         // justify-content: space-around;
-        
     
         &__block{
             position: relative;
@@ -187,6 +183,7 @@ h2{
             padding: 16px;
             max-width: 386px;
             max-height: 444px;
+            margin: 0 15px;
             &.unactive{
                 opacity: 60%;
 
@@ -195,7 +192,6 @@ h2{
                         display: none;
                     }
                 }
-                
             }
     
             &-image{
@@ -209,8 +205,6 @@ h2{
                     min-height: 330px;
                     max-width: 354px;
                     max-height: 330px;
-
-                    
                 }
 
                 p{
@@ -223,7 +217,6 @@ h2{
                     line-height: 160%;
                     color: #8D8F9A;
                 }
-
             }
 
             &-icon{
@@ -263,7 +256,6 @@ h2{
                 //flex-direction: column;
                 align-items: center;
                 padding: 0;
-    
                 width: 58px;
                 height: 29px;
             }
@@ -294,12 +286,18 @@ h2{
 
 .modal{
     position: absolute;
-    width: 1440px;
-    height: 1435px;
+    max-width: 1440px;
+    min-width: 1440px;
+    min-height: 1435px;
+    max-height: 1435px;
     left: 0;
     top: 78px;
-
+    z-index: 6;
     background: rgba(57, 55, 72, 0.22);
+
+    &__header{
+        display: flex;
+    }
 
     &__content{
         display: flex;
@@ -308,14 +306,39 @@ h2{
         align-items: center;
         padding: 32px 16px;
         gap: 32px;
-
+        z-index: 6;
         position: absolute;
-        width: 325px;
-        height: 677px;
-        left: 1043px;
-        top: 78px;
-
+        min-width: 325px;
+        max-width: 325px;
+        max-height: 677px;
+        left: 1000px;
+        top: 0;
         background: #FFFFFF;
+
+        &-info{
+            display: flex;
+            
+            p{
+                padding: 0 13px;  // fix
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 18px;
+            }
+        }
+
+        &-bottom{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0;
+            gap: 12px;
+
+            max-width: 292px;
+            max-height: 43px;
+
+            
+        }
     }
 }
 
@@ -384,24 +407,15 @@ h2{
             // left: 1248px;
             // top: 65px;
             //   overflow: hidden;
-            ul{
-                //  position: absolute;
-                // // top: 8%;
-                //  left: -30px;
-                // overflow: hidden;
-                
+            ul{ 
                 
                 li{
-                    // overflow: hidden;
                     list-style-type:none;
                     cursor: pointer;
-                    // position: absolute;
                     min-width: 114px;
                     min-height: 27px;
                     max-width: 114px;
                     max-height: 45px;
-                    // left: 1248px;
-                    // top: 127px;
 
                     &:hover {
                         background: rgba(36, 36, 36, 0.05);
@@ -418,3 +432,17 @@ h2{
 
 
 
+
+    .danModal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(36, 36, 36, 0.05);
+    }
+
+    .danModal__content {
+        z-index: 999;
+        background-color: white;
+    }

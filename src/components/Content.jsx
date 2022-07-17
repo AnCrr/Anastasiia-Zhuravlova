@@ -14,6 +14,7 @@ import { productSelector } from "../redux/products/selectors";
 const mapStateToProps = (state) => ({
   category: filterSelector(state).category,
   products: productSelector(state).products,
+  opened: cartSelector(state).opened,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -44,7 +45,7 @@ class Content extends Component {
       this.props.category.slice(1); // to utils
     return (
       <div className="content">
-        {/* <ModalCart /> */}
+        {this.props.opened && <ModalCart />}
         <div className="title">
           <h2>{category}</h2>
         </div>
