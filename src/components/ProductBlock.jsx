@@ -4,10 +4,11 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 
 import { filterSelector } from "../redux/filter/selectors";
 import { addItem } from "../redux/cart/slice";
+import { getCookie } from "../utils/getCookie";
 
-const mapStateToProps = (state) => ({
-  currency: filterSelector(state).currency,
-});
+// const mapStateToProps = (state) => ({
+//   currency: filterSelector(state).currency,
+// });
 
 const mapDispatchToProps = (dispatch) => ({
   addItem: bindActionCreators(addItem, dispatch),
@@ -19,12 +20,20 @@ class ProductBlock extends Component {
     gallery: this.props.product.gallery,
     price: this.props.product.prices,
     id: this.props.product.id,
+    brand: this.props.product.brand,
   };
 
   componentDidMount() {}
 
   handleAddItem = () => {
-    this.props.addItem(this.props.product);
+    const productInfo = this.props.product;
+    const attributes = this.props.product.attributes;
+    const productAttrs = attributes.reduce((accum, attr) => {
+      accum.push({ id: attr.id, value: attr.items[1].value });
+      return accum;
+    }, []);
+    const product = { productInfo, productAttrs };
+    this.props.addItem(product);
   };
 
   render() {
@@ -36,7 +45,6 @@ class ProductBlock extends Component {
             ? "content__products__block unactive"
             : "content__products__block"
         }
-        // fix
       >
         <div className="content__products__block-image">
           {!this.props.product.inStock && <p>OUT OF STOCK</p>}
@@ -68,13 +76,14 @@ class ProductBlock extends Component {
         </div>
         <div className="--space-base"></div>
         <div className="content__products__block-info">
-          <span className="content__products__block-title">
-            {this.state.name}
-          </span>
+          <div className="content__products__block-title">
+            <p>{this.state.name}</p>
+            <p>{this.state.brand}</p>
+          </div>
           <span className="content__products__block-price">
             {this.state.price.map(
               (price, index) =>
-                price.currency.symbol === this.props.currency && (
+                price.currency.label === getCookie("activeCurrency") && (
                   <p key={index}>
                     {price.currency.symbol}
                     {price.amount}
@@ -88,4 +97,4 @@ class ProductBlock extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductBlock);
+export default connect(null, mapDispatchToProps)(ProductBlock);

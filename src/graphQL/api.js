@@ -13,21 +13,9 @@ const productsFields = [
 
 const currencyList = ["label", "symbol"];
 
-const attrList = ["name", "type"];
+const attrList = ["id", "name"];
 
 const attrItemsList = ["displayValue", "value"];
-
-// export const getCat = async () => {
-//   const query = new Query("categories", true)
-//     .addField("name")
-//     .addField(
-//       new Field("products").addField(new Field("prices").addField("amount"))
-//     );
-
-//   const result = await client.post(query);
-//   // const arr = result.categories.map((item) => console.log(item.products));
-//   //   console.log(result.categories);
-// };
 
 export const fetchProductsData = (title) => {
   const query = new Query("category", true)
@@ -49,14 +37,6 @@ export const fetchProductsData = (title) => {
   return client.post(query);
 };
 
-// export const fetchProductId = () => {
-//   const query = new Query("product", true)
-//     .addArgument("id", "String!", "apple-imac-2021")
-//     .addField("prices")
-//     .addField(new Field("amount"));
-//   return client.post(query);
-// };
-
 export const fetchCategoryName = () => {
   const query = new Query("categories", true).addField("name");
   return client.post(query);
@@ -64,5 +44,22 @@ export const fetchCategoryName = () => {
 
 export const fetchCurrencies = () => {
   const query = new Query("currencies", true).addFieldList(currencyList);
+  return client.post(query);
+};
+
+export const fetchProductById = (id) => {
+  const query = new Query("product", true)
+    .addArgument("id", "String!", id)
+    .addFieldList(productsFields)
+    .addField(
+      new Field("prices")
+        .addField("amount")
+        .addField(new Field("currency").addFieldList(currencyList))
+    )
+    .addField(
+      new Field("attributes")
+        .addFieldList(attrList)
+        .addField(new Field("items").addFieldList(attrItemsList))
+    );
   return client.post(query);
 };

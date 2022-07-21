@@ -22,17 +22,22 @@ class Categories extends Component {
   componentDidMount() {
     (async () => {
       const { categories } = await fetchCategoryName();
-      this.setState({ categories: categories });
+      this.setState({ categories });
     })();
+    // localStorage.setItem("category", "all"); //???
   }
 
   onChangeActive = ({ target }) => {
+    const category = target.outerText.toLowerCase();
     if (target) {
-      this.props.setCategory(target.outerText.toLowerCase());
+      this.props.setCategory(category);
+      localStorage.setItem("category", category);
     }
   };
 
   render() {
+    const activeCategory = this.props.category || "all";
+    // ? this.props.category : "all"
     return (
       <div className="navigation">
         <div className="header__navigation">
@@ -40,9 +45,7 @@ class Categories extends Component {
             return (
               <span
                 key={index}
-                className={
-                  category.name === this.props.category ? "active" : ""
-                }
+                className={category.name === activeCategory ? "active" : ""}
                 onClick={this.onChangeActive}
               >
                 {category.name.toUpperCase()}

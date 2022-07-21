@@ -6,23 +6,62 @@ import Categories from "./Categories";
 import Select from "./Select";
 import { openModal } from "../redux/cart/slice";
 import { cartSelector } from "../redux/cart/selectors";
+import { setCartToLs } from "../utils/setCartToLS";
+import { setCategoryToLS } from "../utils/setCategoryToLS";
+import { calcTotalCount } from "../utils/calcTotalCount";
+import { filterSelector } from "../redux/filter/selectors";
+import { setCookie } from "../utils/setCookie";
+import { fetchCurrencies } from "../graphQL/api";
+import { setCurrencies, setActiveCurrency } from "../redux/filter/slice";
+import { getCookie } from "../utils/getCookie";
 
 const mapStateToProps = (state) => ({
   opened: cartSelector(state).opened,
+  items: cartSelector(state).items,
+  category: filterSelector(state).category,
+  activeCurrency: filterSelector(state).activeCurrency,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   openModal: bindActionCreators(openModal, dispatch),
+  setCurrencies: bindActionCreators(setCurrencies, dispatch),
+  setActiveCurrency: bindActionCreators(setActiveCurrency, dispatch),
 });
 
 class Header extends Component {
   state = {
     isModalOpen: false,
+    totalCount: 0,
   };
 
   handleOpenModal = () => {
     this.props.openModal(!this.props.opened);
   };
+
+  componentDidMount() {
+    setCartToLs(this.props.items);
+    this.calcTotalCount();
+    this.props.category
+      ? setCategoryToLS(this.props.category)
+      : setCategoryToLS("all");
+
+    if (!this.props.activeCurrency) {
+      setCookie("activeCurrency", "USD");
+      this.props.setActiveCurrency(getCookie("activeCurrency"));
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    setCartToLs(this.props.items);
+    if (prevState.items !== this.props.items) {
+      this.calcTotalCount();
+    }
+  }
+
+  calcTotalCount() {
+    const totalCount = calcTotalCount(this.props.items);
+    this.setState({ totalCount });
+  }
 
   render() {
     return (
@@ -109,11 +148,15 @@ class Header extends Component {
                     fill="#43464E"
                   />
                 </svg>
+                {this.state.totalCount > 0 && (
+                  <div className="header__total-count">
+                    <span>{this.state.totalCount}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
-        {/* {this.state.isModalOpen && <DanModal>DanModal</DanModal>} */}
       </div>
     );
   }

@@ -20,7 +20,7 @@
                 min-height: 29px;
                 max-width: 32px;
                 max-height: 29px;
-                left: 145px;
+                left: 153px;
                 top: -1px;
                 font-style: normal;
                 font-weight: 500;
@@ -59,27 +59,29 @@
             min-width: 114px;
             min-height: 169px;
             max-width: 114px;
-            max-height: 169px;
+            // max-height: 169px;
             // left: 1248px;
             // top: 65px;
             //   overflow: hidden;
             ul{ 
                 
                 li{
-                    list-style-type:none;
+                    // list-style-type:none;
                     cursor: pointer;
+                    align-self: center;
                     min-width: 114px;
-                    min-height: 27px;
+                    min-height: 45px;
                     max-width: 114px;
                     max-height: 45px;
+                    text-align: center;
 
                     &:hover {
                         background: rgba(36, 36, 36, 0.05);
                       }
               
                       &.active {
-                        font-weight: bold;
-                        color: rgba(36, 36, 36, 0.05);
+                        // font-weight: bold;
+                        background: #EEEEEE;
                       }
                 }
             }

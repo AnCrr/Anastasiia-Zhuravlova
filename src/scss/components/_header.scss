@@ -9,7 +9,6 @@
         display: flex;
         align-items: center;
         //padding: 0;
-        
         max-width: 234px;
         max-height: 56px;
 
@@ -24,8 +23,8 @@
                     height: 56px;
                     
                 &.active{
-                    color: $green;
-                    border-bottom: 1px solid $green;
+                    color: $light-green;
+                    border-bottom: 1px solid $light-green;
                 }
                     
 
@@ -65,4 +64,32 @@
 
     }
 
+    &__total-count{
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        right: 6.11%;
+        bottom: 55%;
+        background: #1D1F22;
+        border-radius: 50%;
+        max-width: 20px;
+        min-height: 20px;
+        min-width: 20px;
+        max-height: 20px;
+        
+        span{
+            position: absolute;
+            left: 30%;
+            top: 10%;
+            color: white;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            text-transform: uppercase;
+        }
+    }
 }

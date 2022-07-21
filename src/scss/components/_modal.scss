@@ -11,6 +11,15 @@
 
     &__header{
         display: flex;
+        max-width: 100%;
+        min-width: 100%;
+        text-align: left;
+
+        p{
+            &:first-child{
+                font-weight: 700;
+            }
+        }
     }
 
     &__content{
@@ -32,6 +41,9 @@
 
         &-info{
             display: flex;
+            text-align: left;
+            justify-content: space-between;
+            min-width: 325px;
             
             p{
                 padding: 0 13px;  // fix
@@ -58,6 +70,7 @@
     }
     &__products{
         overflow: scroll;
+        margin: 20px 0;
     }
 }
 

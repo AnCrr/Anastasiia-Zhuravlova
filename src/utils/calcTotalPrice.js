@@ -1,3 +1,17 @@
+import { getCookie } from "./getCookie";
+
 export const calcTotalPrice = (items) => {
-  return items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
+  // console.log("items", items);
+  const prices = [];
+  items.forEach((item) => {
+    const count = item.count;
+    item.prices.forEach((price) => {
+      // console.log(price);
+      return price.currency.label === getCookie("activeCurrency")
+        ? prices.push(price.amount * count)
+        : null;
+    });
+  });
+
+  return prices.reduce((sum, price) => (sum += price), 0);
 };

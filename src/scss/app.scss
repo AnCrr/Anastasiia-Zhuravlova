@@ -1,12 +1,12 @@
 @import './variables.scss';
 @import 'fonts';
 @import './components/all.scss';
+@import './libs/normalize.scss';
 
 body {
     background-color: $background;
-    font-family: Raleway;
+    
     color: $black;
-    // -webkit-appearance: none;
   }
 
 .wrapper {
@@ -52,6 +52,7 @@ body {
         right: 0%;
         top: 5.84%;
         cursor: pointer;
+        z-index: 3;
     }
 
     &--modal{
@@ -69,9 +70,10 @@ body {
         font-size: 14px;
         line-height: 120%;
         cursor: pointer;
+        text-align: center;
 
         &--check{
-            background-color: $green;
+            background-color: $light-green;
             color: white;
             border: none;
         }
@@ -82,10 +84,8 @@ body {
     position: absolute;
     width: 299px;
     height: 68px;
-    // left: 101px;
     top: 160px;
     left: calc(50% - 299px/2 - 469.5px);
-    // top: calc(50% - 68px/2 - 562.5px);
     display: flex;
     align-items: center;
 }
@@ -96,8 +96,6 @@ h2{
     font-size: 42px;
     line-height: 160%;
 }
-
-
 
 .--space-base{
     width: 24px;

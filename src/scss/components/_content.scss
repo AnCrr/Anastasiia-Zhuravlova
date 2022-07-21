@@ -82,7 +82,11 @@
                 font-weight: 300;
                 font-size: 18px;
                 line-height: 160%;
+                display: flex;
                 
+                p{
+                    padding-right: 5px;
+                }
             }
     
             &-price{

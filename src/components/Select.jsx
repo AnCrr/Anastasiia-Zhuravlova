@@ -4,20 +4,23 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 
 import { fetchCurrencies } from "../graphQL/api";
 import { filterSelector } from "../redux/filter/selectors";
-import { setCurrency } from "../redux/filter/slice";
+import { setCurrencies } from "../redux/filter/slice";
+import { setCookie } from "../utils/setCookie";
+import { getCookie } from "../utils/getCookie";
 
 const mapStateToProps = (state) => ({
-  currency: filterSelector(state).currency,
+  activeCurrency: filterSelector(state).activeCurrency,
+  currencies: filterSelector(state).currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCurrency: bindActionCreators(setCurrency, dispatch),
+  setCurrencies: bindActionCreators(setCurrencies, dispatch),
 });
 
 class Select extends Component {
   ref = createRef();
   state = {
-    currencies: [],
+    // currencies: [],
     opened: false,
   };
   handleOpenPopup = () => {
@@ -25,9 +28,11 @@ class Select extends Component {
   };
 
   handleSelectCurrency = (currency) => {
-    this.props.setCurrency(currency);
-
+    setCookie("activeCurrency", currency.label);
+    // setCookie('activeCurrency')
     this.setState({ opened: false });
+    // console.log(this.state.activeIdx);
+    window.location.reload();
   };
 
   handleClickOutside = (event) => {
@@ -40,7 +45,7 @@ class Select extends Component {
   getCurrencies = async () => {
     const { currencies } = await fetchCurrencies();
 
-    this.setState({ currencies });
+    this.props.setCurrencies({ currencies });
   };
 
   componentDidMount() {
@@ -54,11 +59,18 @@ class Select extends Component {
     }; //do I need return?
   }
 
+  findCurrency() {
+    const { currencies, activeCurrency } = this.props;
+    const { symbol } =
+      currencies.find(({ label }) => label === activeCurrency) || {};
+    return symbol;
+  }
+
   render() {
     return (
       <div ref={this.ref} className="select">
         <div onClick={() => this.handleOpenPopup()} className="select__label">
-          <span>{this.props.currency}</span>
+          <span>{this.findCurrency()}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="8"
@@ -77,9 +89,12 @@ class Select extends Component {
         {this.state.opened && (
           <div className="select__popup">
             <ul>
-              {this.state.currencies.map((currency, index) => (
+              {this.props.currencies.map((currency, index) => (
                 <li
-                  onClick={() => this.handleSelectCurrency(currency.symbol)}
+                  className={
+                    this.props.activeCurrency === currency.label ? "active" : ""
+                  }
+                  onClick={() => this.handleSelectCurrency(currency)}
                   key={index}
                   value={currency.symbol}
                 >
