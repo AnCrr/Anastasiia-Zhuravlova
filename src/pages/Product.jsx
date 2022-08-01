@@ -1,62 +1,164 @@
 import React, { Component } from "react";
 import { withParams } from "../utils/adaptHook";
 import { connect } from "react-redux";
-// import { useParams, Link, useNavigate } from "react-router-dom";
+import parse from "html-react-parser";
+import { bindActionCreators } from "redux";
 
 import { fetchProductById } from "../graphQL/api";
 import { filterSelector } from "../redux/filter/selectors";
+import { reduceAttrs } from "../utils/reduceAttrs";
+import Gallery from "../components/Gallery";
+import { addItem } from "../redux/cart/slice";
 
 const mapStateToProps = (state) => ({
   currency: filterSelector(state).activeCurrency,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   addItem: bindActionCreators(addItem, dispatch),
-//   minusItem: bindActionCreators(minusItem, dispatch),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  addItem: bindActionCreators(addItem, dispatch),
+});
 
 class Product extends Component {
-  state = { item: {} };
+  state = { item: {}, attributes: [] };
   componentDidMount() {
-    // const { id } = this.props.params
-    const id = "jacket-canada-goosee";
-    this.getProduct(id);
+    this.getProduct(this.props.params.id);
   }
+
   async getProduct(id) {
     const { product } = await fetchProductById(id);
-    this.setState({ item: product });
-    // console.log(result);
+    this.setState({
+      item: { ...product, attributes: reduceAttrs(product.attributes) },
+      attributes: reduceAttrs(product.attributes), // почему это работает правильно и не работает если здесь не передавать отдельно атрибуты, а при отрисовке доставать их из item???
+      attrs: product.attributes.reduce((accum, attr) => {
+        accum.push({ id: attr.id, value: attr.items[0].value });
+        return accum;
+      }, []),
+    });
   }
+
+  handleSetAttrs = (event) => {
+    const { attrs } = this.state;
+    const resultAttrs = attrs.map((attr) => {
+      if (attr.id === event.target.id) {
+        return { ...attr, value: event.target.dataset.value };
+      }
+      return attr;
+    });
+    // console.log(resultAttrs);
+    this.setState({ attrs: resultAttrs });
+  };
+
+  handleAddItem = () => {
+    // const productInfo = this.state.item;
+    const productInfo = { ...this.state.item, attrs: this.state.attrs };
+    const productAttrs = this.state.attrs;
+    const product = { productInfo, productAttrs };
+    console.log(productInfo);
+    this.props.addItem(productInfo);
+    // console.log("added", product);
+  };
+
   render() {
-    // console.log(this.state.item?.product.name);
-    const product = this.state.item;
-    console.log(product);
+    // console.log(this.state.item);
+    // const dataLength = Object.keys(this.state.item);
+    // console.log(this.state.item.attributes);
     const description = this.state.item.description;
     return (
-      <div className="product-block-wrapper">
-        <div className="product-block">
-          <img
-            className="product-block__image"
-            src={product.gallery && product.gallery[0]}
-            alt="Cake"
-          />
-          <h2 className="product-block__title">{this.state.item.name}</h2>
-          <h4 className="product-block__price">
-            Стоимость:{" "}
-            {this.state.item.prices &&
-              this.state.item.prices.map((price, index) => {
-                return (
-                  price.currency.label === this.props.currency && (
-                    <p key={index}>
-                      {price.currency.symbol}
-                      {price.amount}
-                    </p>
-                  )
+      <div className="product-wrapper">
+        <div className="product">
+          <Gallery images={this.state.item.gallery} />
+
+          <div className="product__info">
+            <div className="product__info--title">
+              <h2 className="product__info--title--brand">
+                {this.state.item.brand}
+              </h2>
+              <h2 className="product__info--title--name">
+                {this.state.item.name}
+              </h2>
+            </div>
+
+            <div className="product__info--attributes">
+              {this.state.attributes.map((attribute, index) => {
+                const current = this.state.attrs.find(
+                  (attr) => attr.id === attribute.id
                 );
-              })}{" "}
-          </h4>
+                const items = attribute.values.map((value, index) => {
+                  if (attribute.name === "Color") {
+                    return (
+                      <div
+                        onClick={(event) => this.handleSetAttrs(event)}
+                        key={index}
+                        className={`product__info--attributes__color-wrapper ${
+                          value === current.value ? "active" : ""
+                        }`}
+                      >
+                        <div
+                          id={attribute.id}
+                          data-value={value}
+                          style={{
+                            backgroundColor: value,
+                          }}
+                          className="product__info--attributes__color-item"
+                        ></div>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div key={index}>
+                      <div
+                        onClick={(event) => this.handleSetAttrs(event)}
+                        className="product__info--attributes__item"
+                      >
+                        <p
+                          id={attribute.id}
+                          data-value={value}
+                          className={value === current.value ? "active" : ""}
+                        >
+                          {value}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                });
+
+                return (
+                  <div key={index}>
+                    <div className="product__info--attributes--name">
+                      {attribute.name.toUpperCase()}:
+                    </div>
+                    <div className="product__info--attributes__items">
+                      {items}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="product__info--price">
+              PRICE:{" "}
+              {this.state.item.prices &&
+                this.state.item.prices.map((price, index) => {
+                  return (
+                    price.currency.label === this.props.currency && (
+                      <p key={index}>
+                        {price.currency.symbol}
+                        {price.amount}
+                      </p>
+                    )
+                  );
+                })}{" "}
+            </div>
+            <button
+              onClick={() => this.handleAddItem()}
+              className="product__info--button"
+            >
+              <p>ADD TO CART</p>
+            </button>
+            <div className="product__info--description">
+              {description && parse(description)}
+            </div>
+          </div>
         </div>
-        <div className="product-block__info">{description}</div>
       </div>
     );
   }
@@ -110,4 +212,7 @@ class Product extends Component {
 //   );
 // };
 
-export default connect(mapStateToProps, {})(Product);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withParams(Product));

@@ -1,13 +1,12 @@
 .content{
     display: flex;
-    
+   
     &__products {
         position: relative;
         display: flex;
         flex-wrap: wrap;
-        top: 253px;
+        top: 190px;
         left: 50px;
-        // justify-content: space-around;
     
         &__block{
             position: relative;
@@ -30,13 +29,7 @@
             }
     
             &-image{
-                //  position: absolute;
-                // max-width: 354px;
-                // max-height: 330px;
-                // background: #C4C4C4;
                  img{
-                    // position: absolute;
-                    // min-width: 354px;
                     min-height: 330px;
                     max-width: 354px;
                     max-height: 330px;

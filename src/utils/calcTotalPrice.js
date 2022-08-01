@@ -7,6 +7,7 @@ export const calcTotalPrice = (items) => {
     const count = item.count;
     item.prices.forEach((price) => {
       // console.log(price);
+      // console.log(count, price.amount);
       return price.currency.label === getCookie("activeCurrency")
         ? prices.push(price.amount * count)
         : null;

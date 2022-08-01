@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { reduceAttrs } from "../../utils/reduceAttrs";
+
 const initialState = {
   products: [],
+};
+
+const modifyProductsData = (data) => {
+  return data.map((product) => {
+    return { ...product, attributes: reduceAttrs(product.attributes) };
+  });
 };
 
 const productSlice = createSlice({
@@ -9,7 +17,7 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     setProducts(state, action) {
-      state.products = action.payload;
+      state.products = modifyProductsData(action.payload);
     },
   },
 });

@@ -8,7 +8,9 @@ class MainLayout extends Component {
     return (
       <div className="App">
         <div className="wrapper">
-          <Header />
+          <div className="wrapper__header">
+            <Header />
+          </div>
           <Outlet />
         </div>
       </div>

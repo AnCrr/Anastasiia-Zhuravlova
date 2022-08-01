@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
+import { Link } from "react-router-dom";
 
 import ModalCartItem from "./ModalCartItem";
 import { cartSelector } from "../redux/cart/selectors";
@@ -28,11 +29,20 @@ class ModalCart extends Component {
   componentDidMount() {
     const totalCount = calcTotalCount(this.props.items);
     this.setState({ totalCount });
-    // console.log(getCookie("activeCurrency"));
   }
   componentDidUpdate() {
-    // console.log("updated", this.props);
+    // this.setState({ items: this.props.items });
+    // console.log(this.state);
   }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.category && this.props.category !== prevProps.category) {
+  //     this.fetchData(this.props.category);
+  //   }
+  // }
+
+  handleCloseModal() {
+    this.props.openModal(false);
+  } // потом сделать handleClickOutSide и убрать закрытие модалки здесь
 
   get template() {
     return (
@@ -42,7 +52,7 @@ class ModalCart extends Component {
             <p>My bag</p>
             <p>
               ,{this.state.totalCount} item
-              {this.props.items.length > 1 && "s"}
+              {this.state.totalCount > 1 && "s"}
             </p>
           </div>
           <div className="modal__products">
@@ -63,9 +73,14 @@ class ModalCart extends Component {
             </p>
           </div>
           <div className="modal__content-bottom">
-            <div className="button button--modal button--modal--view">
-              VIEW BAG
-            </div>
+            <Link to="/cart">
+              <div
+                onClick={() => this.handleCloseModal()}
+                className="button button--modal button--modal--view"
+              >
+                VIEW BAG
+              </div>
+            </Link>
             {/* make constants */}
             <div className="button button--modal button--modal--check">
               CHECK OUT

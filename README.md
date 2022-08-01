@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+TODO:
+
+- check the style ob borders in the cart, how to change it to divs with 1px height
+- вопрос в Product.jsx
+- перенесла модалку в хедер, правильно ли это? если да, как исправить покрытие контента цветом?
+- fix style in cart info
+- проверить все отступы, поменять кнопки +,-
+- check the name of findExistedItem util
+- if I choose another attributes on the cart page, do I need to change them in modal cart?

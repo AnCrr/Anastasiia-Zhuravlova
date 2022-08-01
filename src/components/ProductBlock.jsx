@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
+import { Link } from "react-router-dom";
 
-import { filterSelector } from "../redux/filter/selectors";
 import { addItem } from "../redux/cart/slice";
 import { getCookie } from "../utils/getCookie";
 
@@ -26,14 +26,18 @@ class ProductBlock extends Component {
   componentDidMount() {}
 
   handleAddItem = () => {
-    const productInfo = this.props.product;
+    // const productInfo = this.props.product;
+
     const attributes = this.props.product.attributes;
     const productAttrs = attributes.reduce((accum, attr) => {
-      accum.push({ id: attr.id, value: attr.items[1].value });
+      accum.push({ id: attr.id, value: attr.values[0] });
+      accum.push({ id: attr.id, value: attr.values[0] });
       return accum;
     }, []);
+    const productInfo = { ...this.props.product, attrs: productAttrs };
     const product = { productInfo, productAttrs };
-    this.props.addItem(product);
+    // console.log(productInfo);
+    this.props.addItem(productInfo);
   };
 
   render() {
@@ -49,7 +53,9 @@ class ProductBlock extends Component {
         <div className="content__products__block-image">
           {!this.props.product.inStock && <p>OUT OF STOCK</p>}
           {/* make constant */}
-          <img src={this.state.gallery[0]} alt="product" />
+          <Link to={`/product/${this.state.id}`}>
+            <img src={this.state.gallery[0]} alt="product" />
+          </Link>
           <svg
             onClick={() => this.handleAddItem()}
             className="content__products__block-icon"

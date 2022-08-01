@@ -4,13 +4,14 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 
 import { fetchCurrencies } from "../graphQL/api";
 import { filterSelector } from "../redux/filter/selectors";
+import { cartSelector } from "../redux/cart/selectors";
 import { setCurrencies } from "../redux/filter/slice";
 import { setCookie } from "../utils/setCookie";
-import { getCookie } from "../utils/getCookie";
 
 const mapStateToProps = (state) => ({
   activeCurrency: filterSelector(state).activeCurrency,
   currencies: filterSelector(state).currencies,
+  opened: cartSelector(state).opened,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -20,7 +21,6 @@ const mapDispatchToProps = (dispatch) => ({
 class Select extends Component {
   ref = createRef();
   state = {
-    // currencies: [],
     opened: false,
   };
   handleOpenPopup = () => {
@@ -29,9 +29,9 @@ class Select extends Component {
 
   handleSelectCurrency = (currency) => {
     setCookie("activeCurrency", currency.label);
-    // setCookie('activeCurrency')
+
     this.setState({ opened: false });
-    // console.log(this.state.activeIdx);
+
     window.location.reload();
   };
 
@@ -69,7 +69,11 @@ class Select extends Component {
   render() {
     return (
       <div ref={this.ref} className="select">
-        <div onClick={() => this.handleOpenPopup()} className="select__label">
+        <button
+          disabled={this.props.opened}
+          onClick={() => this.handleOpenPopup()}
+          className="select__label"
+        >
           <span>{this.findCurrency()}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +89,7 @@ class Select extends Component {
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </button>
         {this.state.opened && (
           <div className="select__popup">
             <ul>

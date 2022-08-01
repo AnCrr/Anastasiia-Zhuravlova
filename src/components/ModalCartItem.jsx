@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
 
-import { filterSelector } from "../../redux/filter/selectors";
-import { addItem, minusItem } from "../../redux/cart/slice";
-import { cartSelector } from "../../redux/cart/selectors";
+import { filterSelector } from "../redux/filter/selectors";
+import { addItem, minusItem } from "../redux/cart/slice";
+import { cartSelector } from "../redux/cart/selectors";
 
 const mapStateToProps = (state) => ({
   currency: filterSelector(state).activeCurrency,
@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
 class ModalCartItem extends Component {
   state = {
     ...this.props.item,
+    customCount: this.props.item.count,
   };
 
   componentDidMount() {
@@ -58,17 +59,21 @@ class ModalCartItem extends Component {
   // };
 
   handleAddItem = () => {
-    this.props.addItem({ productInfo: this.state });
+    this.props.addItem(this.state);
+    this.setState({ customCount: ++this.state.customCount });
   };
 
   handleMinusItem = () => {
-    this.props.minusItem(this.state.id);
+    this.props.minusItem({ id: this.state.id, attrs: this.state.attrs });
+    this.setState({ customCount: --this.state.customCount });
   };
+  // handleMinusItem = () => {
+  //   this.props.minusItem(this.state.id);
+  // };
 
   render() {
-    // const data = this.getFormattedData();
-    const findItem = this.props.items.find((item) => item.id === this.state.id);
-    // console.log(this.props.items);
+    // const findItem = this.props.items.find((item) => item.id === this.state.id);
+    // console.log(this.state.attrs);
     return (
       <div className="modal__cart-item">
         <div className="modal__cart-item__info">
@@ -93,7 +98,9 @@ class ModalCartItem extends Component {
               const current = this.state.attrs.find(
                 (attr) => attr.id === attribute.id
               );
-              const items = attribute.values.map((value, index) => {
+              // console.log(current);
+              console.log(attribute);
+              const items = attribute.values?.map((value, index) => {
                 if (attribute.name === "Color") {
                   return (
                     <div
@@ -138,9 +145,9 @@ class ModalCartItem extends Component {
           <button onClick={this.handleAddItem}>
             <span>+</span>
           </button>
-          <span>{findItem && findItem.count}</span>
+          <span>{this.state.customCount}</span>
           <button
-            disabled={findItem.count === 1}
+            disabled={this.state.customCount === 1}
             onClick={this.handleMinusItem}
           >
             <span>-</span>
@@ -155,5 +162,3 @@ class ModalCartItem extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalCartItem);
-
-//class index === this.state.activeIdx ? "active" : ""

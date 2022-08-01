@@ -10,7 +10,8 @@ import { filterSelector } from "../redux/filter/selectors";
 import { makeCategoryTitle } from "../utils/makeCategoryTitle";
 import { setProducts } from "../redux/products/slice";
 import { productSelector } from "../redux/products/selectors";
-import Product from "../pages/Product";
+
+import fsdfdsf from "../utils/addItemToCart";
 
 const mapStateToProps = (state) => ({
   category: filterSelector(state).category,
@@ -44,8 +45,7 @@ class Content extends Component {
   render() {
     return (
       <div className="content">
-        {/* <Product /> */}
-        {this.props.opened && <ModalCart />}
+        {/* {this.props.opened && <ModalCart />} */}
         <div className="title">
           <h2>
             {this.props.category
