@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { Link } from "react-router-dom";
+import { withParams } from "../utils/adaptHook";
 
 import Categories from "./Categories";
 import Select from "./Select";
@@ -35,10 +36,6 @@ class Header extends Component {
     totalCount: 0,
   };
 
-  handleOpenModal = () => {
-    this.props.openModal(!this.props.opened);
-  };
-
   componentDidMount() {
     setCartToLs(this.props.items);
     this.calcTotalCount();
@@ -64,7 +61,18 @@ class Header extends Component {
     this.setState({ totalCount });
   }
 
+  handleOpenModal = (event) => {
+    event.stopPropagation();
+    this.props.openModal(!this.props.opened);
+    if (!this.props.opened) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  };
+
   render() {
+    console.log(this.node);
     return (
       <div className="header">
         <div className="container">
@@ -120,15 +128,24 @@ class Header extends Component {
               </svg>
             </div>
           </Link>
-          <div className="header__cart">
+          <div
+            ref={(node) => {
+              this.node = node;
+            }}
+            className="header__cart"
+          >
             <div className="header__cart-actions">
               <div className="button button--currency">
                 <div className="--spacer-xl"></div>
                 <div className="--spacer-xl"></div>
                 <Select />
               </div>
-              <div
-                onClick={() => this.handleOpenModal()}
+              <button
+                disabled={
+                  this.props.location.pathname === "/cart" ||
+                  this.props.items.length === 0
+                }
+                onClick={(event) => this.handleOpenModal(event)}
                 className="button button--cart"
               >
                 <svg
@@ -156,7 +173,7 @@ class Header extends Component {
                     <span>{this.state.totalCount}</span>
                   </div>
                 )}
-              </div>
+              </button>
             </div>
           </div>
           {this.props.opened && <ModalCart />}
@@ -166,4 +183,4 @@ class Header extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withParams(Header));

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { withParams } from "../utils/adaptHook";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
 import { bindActionCreators } from "redux";
 
+import { withParams } from "../utils/adaptHook";
 import { fetchProductById } from "../graphQL/api";
 import { filterSelector } from "../redux/filter/selectors";
 import { reduceAttrs } from "../utils/reduceAttrs";
@@ -59,9 +59,6 @@ class Product extends Component {
   };
 
   render() {
-    // console.log(this.state.item);
-    // const dataLength = Object.keys(this.state.item);
-    // console.log(this.state.item.attributes);
     const description = this.state.item.description;
     return (
       <div className="product-wrapper">
@@ -148,12 +145,14 @@ class Product extends Component {
                   );
                 })}{" "}
             </div>
-            <button
-              onClick={() => this.handleAddItem()}
-              className="product__info--button"
-            >
-              <p>ADD TO CART</p>
-            </button>
+            {this.state.item.inStock && (
+              <button
+                onClick={() => this.handleAddItem()}
+                className="product__info--button"
+              >
+                <p>ADD TO CART</p>
+              </button>
+            )}
             <div className="product__info--description">
               {description && parse(description)}
             </div>

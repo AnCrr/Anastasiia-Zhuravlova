@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { Link } from "react-router-dom";
+import { createRef } from "react";
 
 import ModalCartItem from "./ModalCartItem";
 import { cartSelector } from "../redux/cart/selectors";
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class ModalCart extends Component {
+  ref = createRef();
   state = {
     totalCount: 0,
   };
@@ -29,25 +31,31 @@ class ModalCart extends Component {
   componentDidMount() {
     const totalCount = calcTotalCount(this.props.items);
     this.setState({ totalCount });
+    document.addEventListener("click", this.handleOutsideClick, false);
   }
-  componentDidUpdate() {
-    // this.setState({ items: this.props.items });
-    // console.log(this.state);
-  }
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.category && this.props.category !== prevProps.category) {
-  //     this.fetchData(this.props.category);
-  //   }
-  // }
 
-  handleCloseModal() {
+  componentDidUpdate() {}
+
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleOutsideClick, false);
+  }
+
+  handleCloseModal = () => {
     this.props.openModal(false);
-  } // потом сделать handleClickOutSide и убрать закрытие модалки здесь
+    document.body.style.overflow = "scroll";
+  };
+
+  handleOutsideClick = ({ target }) => {
+    if (!this.ref.current.contains(target)) {
+      this.props.openModal(false);
+      document.body.style.overflow = "scroll";
+    }
+  };
 
   get template() {
     return (
       <div className="modal">
-        <div className="modal__content">
+        <div className="modal__content" ref={this.ref}>
           <div className="modal__header">
             <p>My bag</p>
             <p>

@@ -33,30 +33,39 @@ class Cart extends Component {
         <div className="cart__title">
           <h1>Cart</h1>
         </div>
-        <div className="cart__content">
-          {this.props.items.map((cartItem, index) => (
-            <CartItem key={index} item={cartItem} />
-          ))}
-        </div>
+        {this.props.items.length > 0 ? (
+          <div className="cart__content">
+            {this.props.items.map((cartItem, index) => (
+              <CartItem key={index} item={cartItem} />
+            ))}
+          </div>
+        ) : (
+          <div>
+            <h3>Sorry, your cart is still empty ☹️</h3>
+            <br />
+            <h4>Go and get something! 😉</h4>
+          </div>
+        )}
         <div className="cart__footer">
           <div className="cart__info">
-            <p>
-              Tax 21%: <strong>{(this.props.totalPrice * 21) / 100}</strong>
-            </p>
-            <p>
-              Quantity: <strong>{this.state.totalCount}</strong>
-            </p>
-            <p>
-              Total:
-              <strong>
+            <div className="cart__info--names">
+              <p>Tax 21%:</p>
+              <p>Quantity:</p>
+              <p>Total:</p>
+            </div>
+
+            <div className="cart__info--numbers">
+              <p>{((this.props.totalPrice * 21) / 100).toFixed(2)}</p>
+              <p>{this.state.totalCount}</p>
+              <p>
                 {this.props.currencies.map((item) => {
                   if (item.label === getCookie("activeCurrency")) {
                     return item.symbol;
                   }
                 })}
                 {this.props.totalPrice}
-              </strong>
-            </p>
+              </p>
+            </div>
           </div>
           <div className="cart__button">
             <button>Order</button>

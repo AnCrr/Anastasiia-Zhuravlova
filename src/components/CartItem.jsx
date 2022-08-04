@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { findCorrectPrice } from "../utils/findCorrectPrice";
+// import { findCorrectPrice } from "../utils/findCorrectPrice";
 import { filterSelector } from "../redux/filter/selectors";
-import { showAttributes } from "../utils/showAttributes";
+// import { showAttributes } from "../utils/showAttributes";
 import { addItem, minusItem } from "../redux/cart/slice";
 
 const mapStateToProps = (state) => ({
@@ -20,6 +20,7 @@ class CartItem extends Component {
   state = {
     ...this.props.item,
     customCount: this.props.item.count,
+    activeIdx: 0,
   };
   handleSetAttrs = (event) => {
     const { attrs } = this.state;
@@ -42,8 +43,19 @@ class CartItem extends Component {
     this.setState({ customCount: --this.state.customCount });
   };
 
+  handleClickLeftArrow = () => {
+    const newIdx = this.state.activeIdx === 0 ? 0 : this.state.activeIdx - 1;
+    this.setState({ activeIdx: newIdx });
+  };
+  handleClickRightArrow = () => {
+    const newIdx =
+      this.state.activeIdx === this.state.gallery.length - 1
+        ? this.state.activeIdx
+        : this.state.activeIdx + 1;
+    this.setState({ activeIdx: newIdx });
+  };
+
   render() {
-    // console.log(showAttributes(this.state.attributes, this.state.attrs));
     return (
       <div className="cart-item">
         <div className="border"></div>
@@ -127,18 +139,109 @@ class CartItem extends Component {
           <div className="cart-item__sidebar">
             <div className="cart-item__actions">
               <button onClick={this.handleAddItem}>
-                <span>+</span>
+                <div className="cart-item__actions--vectors">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="1"
+                      height="17"
+                      viewBox="0 0 1 17"
+                      fill="none"
+                    >
+                      <path
+                        d="M0.5 1V16"
+                        stroke="#1D1F22"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="17"
+                      height="17"
+                      viewBox="0 0 17 1"
+                      fill="none"
+                    >
+                      <path
+                        d="M1 0.5H16"
+                        stroke="#1D1F22"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </button>
               <span>{this.state.customCount}</span>
               <button
                 disabled={this.state.customCount === 1}
                 onClick={this.handleMinusItem}
               >
-                <span>-</span>
+                <div className="cart-item__actions--vectors">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="17"
+                    height="1"
+                    viewBox="0 0 17 1"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 0.5H16"
+                      stroke="#1D1F22"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
               </button>
             </div>
             <div className="cart-item__image">
-              <img src={this.state.gallery[0]} alt="product" />
+              <img
+                src={this.state.gallery[this.state.activeIdx]}
+                alt="product"
+              />
+              <div
+                className="cart-item__image--arrow--left"
+                onClick={() => this.handleClickLeftArrow()}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="8"
+                  height="14"
+                  viewBox="0 0 8 14"
+                  fill="none"
+                >
+                  <path
+                    d="M7.25 1.06857L1.625 6.6876L7.25 12.3066"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="cart-item__image--arrow--right"
+                onClick={() => this.handleClickRightArrow()}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="8"
+                  height="14"
+                  viewBox="0 0 8 14"
+                  fill="none"
+                >
+                  <path
+                    d="M0.75 1.06808L6.375 6.68711L0.75 12.3062"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>

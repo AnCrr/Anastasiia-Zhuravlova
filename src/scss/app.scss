@@ -15,8 +15,8 @@ body {
     height: 100%;
     background-color: #fff;
     margin: 50px auto;
-    border-radius: 10px;
     max-width: 1400px;
+    overflow: hidden;
   
     @media(max-width:645px){
       width: calc(100vw - 100px);
@@ -28,6 +28,10 @@ body {
         max-width: 1440px;
         min-height: 80px;
         max-height: 80px;
+    }
+
+    &__content{
+        padding-bottom: 300px;
     }
   }
 
