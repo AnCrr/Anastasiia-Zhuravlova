@@ -4,37 +4,24 @@
     bottom: 81px;
     min-width: 114px;
     min-height: 169px;
-
-    button{
-        &.select__label{
-            background-color: white;
-            border: none;
-            position: absolute;
-            left: 20px;
-        }
-    }
     
     &__label{
-            min-width: 38px;
-            min-height: 29px;
-            max-width: 38px;
-            max-height: 29px;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border: none;
+        position: absolute;
+        left: 20px;
+        min-width: 38px;
+        min-height: 29px;
+        max-width: 38px;
+        max-height: 29px;
         
             & span{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: flex-end;
-                padding: 0 10px;
-                gap: 12px;
-                position: absolute;
-                min-width: 32px;
                 min-height: 29px;
+                min-width: 32px;
                 max-width: 32px;
                 max-height: 29px;
-                // left: 153px;
-                // top: -1px;
-                bottom: 0.5px;
                 font-style: normal;
                 font-weight: 500;
                 font-size: 18px;
@@ -44,14 +31,7 @@
             }
         
             & svg{
-                position: absolute;
-                // left: 480%;
-                left: 25px;
-                // top: 47%;
-                // bottom: 31.25%;
                 transform: matrix(1, 0, 0, -1, 0, 0);
-        
-                
             }
         }
 
@@ -89,7 +69,6 @@
                       }
               
                       &.active {
-                        // font-weight: bold;
                         background: #EEEEEE;
                       }
                 }

@@ -71,5 +71,28 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 TODO:
 
-- вопрос в Product.jsx
-- check the name of findExistedItem util
+- check outsideClick on select(why does not popup closes when I click on modal)
+- fix adding new product with new attributes in cart (CartItem)
+- check map in ProductBlock
+- move productblock styles to separeted style sheet
+- check attributes classnames
+- calcTotalPrice redo to be beautiful
+- make reexports of components
+
+changes:
+
+- getCategoryFromLS added default
+- changed attrs to attributes
+- removed customCount from modalCartItem and cartItem
+- moved activeCategory to url
+- totalPrice is number
+- attributes moved to single component, with two possible stylesheets
+- componentDidUpdate added to carts to make totalCount to change
+- constants made
+- didn`t changed curr props to next props in did update because it is null
+- started to move svg file to separated components(which is better then svg files)
+- implemented new attributes to all parts make them suitable for all the components
+- moved categories(navigation) styles to categories.scss
+- medium font added
+- findExistedItem united with addProductToCart, now it`s handleProducrInCart
+- separated svg

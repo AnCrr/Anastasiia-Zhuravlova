@@ -1,20 +1,19 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-import { setCategory } from "../redux/filter/slice";
-import { filterSelector } from "../redux/filter/selectors";
-import { connect } from "react-redux";
-import { bindActionCreators } from "@reduxjs/toolkit";
 import { fetchCategoryName } from "../graphQL/api";
 
-const mapStateToProps = (state) => ({
-  category: filterSelector(state).category,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setCategory: bindActionCreators(setCategory, dispatch),
-});
-
 class Categories extends Component {
+  static propTypes = {
+    location: PropTypes.string,
+    setCategory: PropTypes.func,
+  };
+
+  static defaultProps = {
+    location: "all",
+  };
+
   state = {
     categories: [],
   };
@@ -24,32 +23,24 @@ class Categories extends Component {
       const { categories } = await fetchCategoryName();
       this.setState({ categories });
     })();
-    // localStorage.setItem("category", "all"); //???
   }
 
-  onChangeActive = ({ target }) => {
-    const category = target.outerText.toLowerCase();
-    if (target) {
-      this.props.setCategory(category);
-      localStorage.setItem("category", category);
-    }
-  };
-
   render() {
-    const activeCategory = this.props.category || "all";
-    // ? this.props.category : "all"
     return (
       <div className="navigation">
-        <div className="header__navigation">
+        <div className="navigation__categories">
           {this.state.categories.map((category, index) => {
             return (
-              <span
+              <Link
+                to={`/category/${category.name}`}
                 key={index}
-                className={category.name === activeCategory ? "active" : ""}
+                className={
+                  category.name === this.props.location ? "active" : ""
+                }
                 onClick={this.onChangeActive}
               >
-                {category.name.toUpperCase()}
-              </span>
+                {category.name}
+              </Link>
             );
           })}
         </div>
@@ -58,5 +49,4 @@ class Categories extends Component {
   }
 }
 
-// export default Categories;
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default Categories;

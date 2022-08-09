@@ -1,74 +1,103 @@
 import React, { Component } from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { cartSelector } from "../redux/cart/selectors";
 import { filterSelector } from "../redux/filter/selectors";
 import CartItem from "../components/CartItem";
 import { calcTotalCount } from "../utils/calcTotalCount";
-import { getCookie } from "../utils/getCookie";
+import { getCookie } from "../utils/cookies";
+import { CART, TAX, QUANTITY, TOTAL, ORDER } from "../constants";
 
 const mapStateToProps = (state) => ({
-  items: cartSelector(state).items,
+  cartItems: cartSelector(state).items,
   totalPrice: cartSelector(state).totalPrice,
   currencies: filterSelector(state).currencies,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   setProducts: bindActionCreators(setProducts, dispatch),
-// });
-
 class Cart extends Component {
+  static propTypes = {
+    cartItems: PropTypes.arrayOf(PropTypes.object),
+    totalPrice: PropTypes.number,
+    currencies: PropTypes.arrayOf(PropTypes.object),
+  };
+
+  static defaultProps = {
+    cartItems: [],
+    totalPrice: 0,
+    currencies: [],
+  };
+
   state = {
     totalCount: 0,
   };
+
   componentDidMount() {
-    const totalCount = calcTotalCount(this.props.items);
+    const { cartItems } = this.props;
+    const totalCount = calcTotalCount(cartItems);
     this.setState({ totalCount });
   }
 
+  componentDidUpdate(prevProps) {
+    const { cartItems } = this.props;
+    const cartItemsCount = calcTotalCount(cartItems);
+    const prevItemsCount = calcTotalCount(prevProps.cartItems);
+    if (cartItemsCount !== prevItemsCount) {
+      this.setState({ totalCount: cartItemsCount });
+    }
+  }
+
+  renderEmptyCart() {
+    return (
+      <div>
+        <h3>Sorry, your cart is still empty ☹️</h3>
+        <br />
+        <h4>Go and get something! 😉</h4>
+      </div>
+    );
+  }
+
   render() {
+    const { totalCount } = this.state;
+    const { cartItems, totalPrice, currencies } = this.props;
+    const tax = Number(((totalPrice * 21) / 100).toFixed(2));
     return (
       <div className="cart">
         <div className="cart__title">
-          <h1>Cart</h1>
+          <h1>{CART}</h1>
         </div>
-        {this.props.items.length > 0 ? (
+        {cartItems.length > 0 ? (
           <div className="cart__content">
-            {this.props.items.map((cartItem, index) => (
-              <CartItem key={index} item={cartItem} />
+            {cartItems.map((cartItem, index) => (
+              <CartItem key={index} cartItem={cartItem} />
             ))}
           </div>
         ) : (
-          <div>
-            <h3>Sorry, your cart is still empty ☹️</h3>
-            <br />
-            <h4>Go and get something! 😉</h4>
-          </div>
+          this.renderEmptyCart()
         )}
         <div className="cart__footer">
           <div className="cart__info">
             <div className="cart__info--names">
-              <p>Tax 21%:</p>
-              <p>Quantity:</p>
-              <p>Total:</p>
+              <p>{TAX}:</p>
+              <p>{QUANTITY}:</p>
+              <p>{TOTAL}:</p>
             </div>
 
             <div className="cart__info--numbers">
-              <p>{((this.props.totalPrice * 21) / 100).toFixed(2)}</p>
-              <p>{this.state.totalCount}</p>
+              <p>{tax}</p>
+              <p>{totalCount}</p>
               <p>
-                {this.props.currencies.map((item) => {
-                  if (item.label === getCookie("activeCurrency")) {
-                    return item.symbol;
+                {currencies.map((currency) => {
+                  if (currency.label === getCookie("activeCurrency")) {
+                    return currency.symbol;
                   }
                 })}
-                {this.props.totalPrice}
+                {totalPrice}
               </p>
             </div>
           </div>
           <div className="cart__button">
-            <button>Order</button>
+            <button>{ORDER}</button>
           </div>
         </div>
       </div>

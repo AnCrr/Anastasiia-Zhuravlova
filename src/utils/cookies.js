@@ -12,3 +12,7 @@ export const getCookie = (cookieName) => {
   }
   return "";
 };
+
+export const setCookie = (name, value) => {
+  document.cookie = name + "=" + value + ";secure";
+};

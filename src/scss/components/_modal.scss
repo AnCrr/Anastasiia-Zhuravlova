@@ -4,7 +4,6 @@
     max-width: 1440px;
     min-width: 1440px;
     min-height: 100vh;
-
     top: 78px;
     z-index: 16;
     background: rgba(57, 55, 72, 0.22);
@@ -18,12 +17,12 @@
         p{
             &:first-child{
                 font-weight: 700;
+                padding-right: 5px;
             }
         }
     }
 
     &__content{
-        
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -46,7 +45,7 @@
             min-width: 325px;
             
             p{
-                padding: 0 13px;  // fix
+                padding: 0 13px;  
                 font-style: normal;
                 font-weight: 500;
                 font-size: 16px;
@@ -60,11 +59,8 @@
             align-items: flex-start;
             padding: 0;
             gap: 12px;
-
             max-width: 292px;
             max-height: 43px;
-
-            
         }
         
     }

@@ -1,0 +1,121 @@
+
+
+
+
+.attributes{
+    padding: 15px 0;
+    .name{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 18px;
+        text-transform: uppercase;
+    }
+
+    .items{
+        display: flex;
+        flex-direction: row;
+        padding: 8px 0;
+        gap: 8px;
+        min-width: 120px;
+        flex-wrap: wrap;
+        line-height: 16px;
+        margin-bottom: 10px;
+    }
+
+   .item{
+        cursor: pointer;
+        padding: 12px 5px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 18px;
+        min-width: 63px;
+        min-height: 45px;
+        border: 1px solid $black;
+        letter-spacing: 0.05em;
+        text-align: center;
+
+        &.active{
+            color: white;
+            background-color: $black;
+        }
+
+    }
+
+    .color-wrapper{
+        justify-content: center;
+        display: flex;
+        min-width: 36px;
+        min-height: 36px;
+
+        &.active{
+            border: 1px solid #5ECE7B;
+        }
+        
+    }
+    .color-item{
+        cursor: pointer;
+        min-width: 32px;
+        max-width: 32px;
+        min-height: 32px;
+        border: 0.1px solid rgb(178, 176, 176);
+        align-self: center;
+    }
+
+
+    &__modal{
+        .items{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 8px 0;
+            gap: 8px;
+            min-width: 120px;
+            flex-wrap: wrap;
+            line-height: 16px;
+        }
+    
+        .item{     
+            padding: 3px 5px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            min-width: 24px;
+            min-height: 24px;
+            align-items: center;
+            text-align: center;
+            border: 1px solid $black;
+    
+            &.active{
+                color: white;
+                background-color: $black;
+            }
+        }
+    
+        .name{
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 16px;
+        }
+        .color-wrapper{
+            justify-content: center;
+            display: flex;
+            min-width: 20px;
+            min-height: 20px;
+    
+            &.active{
+                border: 1px solid #5ECE7B;
+            }
+            
+        }
+        .color-item{
+            min-width: 16px;
+            max-width: 16px;
+            min-height: 16px;
+            border: 0.1px solid rgb(178, 176, 176);
+            align-self: center;
+            
+        }
+    }
+}

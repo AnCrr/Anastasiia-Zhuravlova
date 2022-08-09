@@ -1,0 +1,35 @@
+.navigation{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0;
+    position: absolute;
+    width: 234px;
+    height: 56px;
+    left: 101px;
+    bottom: 0;
+
+    &__categories{
+        display: flex;
+        align-items: center;
+        max-width: 234px;
+        max-height: 56px;
+        text-transform: uppercase;
+
+                a{
+                    cursor: pointer;
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    align-items: flex-end;
+                    width: 97px;
+                    height: 56px;
+                    
+                &.active{
+                    color: $light-green;
+                    border-bottom: 1px solid $light-green;
+                }
+                    
+
+    }
+    }
+}

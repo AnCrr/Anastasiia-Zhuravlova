@@ -2,139 +2,112 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
 import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 
 import { withParams } from "../utils/adaptHook";
 import { fetchProductById } from "../graphQL/api";
 import { filterSelector } from "../redux/filter/selectors";
-import { reduceAttrs } from "../utils/reduceAttrs";
+import { reduceAttributes } from "../utils/reduceAttributes";
 import Gallery from "../components/Gallery";
-import { addItem } from "../redux/cart/slice";
+import { addProduct } from "../redux/cart/slice";
+import Attributes from "../components/Attributes";
+import { ADD_TO_CART, PRICE } from "../constants";
 
 const mapStateToProps = (state) => ({
   currency: filterSelector(state).activeCurrency,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addItem: bindActionCreators(addItem, dispatch),
+  addProduct: bindActionCreators(addProduct, dispatch),
 });
 
 class Product extends Component {
-  state = { item: {}, attributes: [] };
+  static propTypes = {
+    currency: PropTypes.string,
+    params: PropTypes.object,
+    location: PropTypes.object,
+    addProduct: PropTypes.func,
+  };
+
+  static defaultProps = {
+    currency: "USD",
+    params: {},
+    location: {},
+  };
+
+  state = { item: {} };
   componentDidMount() {
     this.getProduct(this.props.params.id);
   }
 
   async getProduct(id) {
     const { product } = await fetchProductById(id);
+    const activeAttributes = product.attributes.reduce((accum, attr) => {
+      accum.push({ id: attr.id, value: attr.items[0].value });
+      return accum;
+    }, []);
     this.setState({
-      item: { ...product, attributes: reduceAttrs(product.attributes) },
-      attributes: reduceAttrs(product.attributes), // почему это работает правильно и не работает если здесь не передавать отдельно атрибуты, а при отрисовке доставать их из item???
-      attrs: product.attributes.reduce((accum, attr) => {
-        accum.push({ id: attr.id, value: attr.items[0].value });
-        return accum;
-      }, []),
+      item: {
+        ...product,
+        attributes: reduceAttributes(product.attributes),
+        activeAttributes,
+      },
     });
   }
 
   handleSetAttrs = (event) => {
-    const { attrs } = this.state;
-    const resultAttrs = attrs.map((attr) => {
-      if (attr.id === event.target.id) {
+    const { activeAttributes } = this.state.item;
+    const resultAttrs = activeAttributes.map((attr) => {
+      if (attr.id === event.target.dataset.name) {
         return { ...attr, value: event.target.dataset.value };
       }
       return attr;
     });
-    // console.log(resultAttrs);
-    this.setState({ attrs: resultAttrs });
+
+    this.setState({
+      item: { ...this.state.item, activeAttributes: resultAttrs },
+    });
   };
 
-  handleAddItem = () => {
-    // const productInfo = this.state.item;
-    const productInfo = { ...this.state.item, attrs: this.state.attrs };
-    const productAttrs = this.state.attrs;
-    const product = { productInfo, productAttrs };
-    console.log(productInfo);
-    this.props.addItem(productInfo);
-    // console.log("added", product);
+  handleAddProduct = () => {
+    const { item } = this.state;
+    const { addProduct } = this.props;
+    const productInfo = { ...item, activeAttributes: item.activeAttributes };
+    addProduct(productInfo);
   };
 
   render() {
-    const description = this.state.item.description;
+    const {
+      description,
+      gallery,
+      brand,
+      name,
+      prices,
+      inStock,
+      attributes,
+      activeAttributes,
+    } = this.state.item;
     return (
       <div className="product-wrapper">
         <div className="product">
-          <Gallery images={this.state.item.gallery} />
+          <Gallery images={gallery} />
 
           <div className="product__info">
             <div className="product__info--title">
-              <h2 className="product__info--title--brand">
-                {this.state.item.brand}
-              </h2>
-              <h2 className="product__info--title--name">
-                {this.state.item.name}
-              </h2>
+              <h2 className="product__info--title--brand">{brand}</h2>
+              <h2 className="product__info--title--name">{name}</h2>
             </div>
 
-            <div className="product__info--attributes">
-              {this.state.attributes.map((attribute, index) => {
-                const current = this.state.attrs.find(
-                  (attr) => attr.id === attribute.id
-                );
-                const items = attribute.values.map((value, index) => {
-                  if (attribute.name === "Color") {
-                    return (
-                      <div
-                        onClick={(event) => this.handleSetAttrs(event)}
-                        key={index}
-                        className={`product__info--attributes__color-wrapper ${
-                          value === current.value ? "active" : ""
-                        }`}
-                      >
-                        <div
-                          id={attribute.id}
-                          data-value={value}
-                          style={{
-                            backgroundColor: value,
-                          }}
-                          className="product__info--attributes__color-item"
-                        ></div>
-                      </div>
-                    );
-                  }
-                  return (
-                    <div key={index}>
-                      <div
-                        onClick={(event) => this.handleSetAttrs(event)}
-                        className="product__info--attributes__item"
-                      >
-                        <p
-                          id={attribute.id}
-                          data-value={value}
-                          className={value === current.value ? "active" : ""}
-                        >
-                          {value}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                });
-
-                return (
-                  <div key={index}>
-                    <div className="product__info--attributes--name">
-                      {attribute.name.toUpperCase()}:
-                    </div>
-                    <div className="product__info--attributes__items">
-                      {items}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <Attributes
+              attributes={attributes}
+              activeAttributes={activeAttributes}
+              isProduct={true}
+              onSetAttrs={this.handleSetAttrs}
+            />
             <div className="product__info--price">
-              PRICE:{" "}
-              {this.state.item.prices &&
-                this.state.item.prices.map((price, index) => {
+              {PRICE}:
+              {prices &&
+                prices.map((price, index) => {
                   return (
                     price.currency.label === this.props.currency && (
                       <p key={index}>
@@ -145,12 +118,12 @@ class Product extends Component {
                   );
                 })}{" "}
             </div>
-            {this.state.item.inStock && (
+            {inStock && (
               <button
-                onClick={() => this.handleAddItem()}
+                onClick={() => this.handleAddProduct()}
                 className="product__info--button"
               >
-                <p>ADD TO CART</p>
+                <p>{ADD_TO_CART}</p>
               </button>
             )}
             <div className="product__info--description">
@@ -162,54 +135,6 @@ class Product extends Component {
     );
   }
 }
-
-// const FullCake = () => {
-//   const { id } = useParams();
-//   const [cake, setCake] = useState<{
-//     imageUrl: string;
-//     title: string;
-//     price: number;
-//     description: string;
-//   }>();
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     async function fetchCake() {
-//       try {
-//         const { data } = await axios.get(
-//           "https://62b1930ac7e53744afbc2567.mockapi.io/items/" + id
-//         );
-//         setCake(data);
-//       } catch (error) {
-//         alert("Ошибка при загрузке страницы");
-//         navigate("/");
-//       }
-//     }
-//     fetchCake();
-//   }, [id]);
-
-//   if (!cake) {
-//     return <h2 className="fullCake-block__loading">Загрузка...</h2>;
-//   }
-
-//   return (
-// <div className="fullCake-block-wrapper">
-//   <div className="fullCake-block">
-//     <img className="fullCake-block__image" src={cake.imageUrl} alt="Cake" />
-//     <h2 className="fullCake-block__title">{cake.title}</h2>
-//     <h4 className="fullCake-block__price">Стоимость: {cake.price} ₴</h4>
-//   </div>
-//   <div className="fullCake-block__info">
-//     <p className="fullCake-block__description"> {cake.description}</p>
-//     <Link to="/">
-//       <button className="button button--outline button--add fullCake-block__btn">
-//         <span>Назад</span>
-//       </button>
-//     </Link>
-//   </div>
-// </div>
-//   );
-// };
 
 export default connect(
   mapStateToProps,

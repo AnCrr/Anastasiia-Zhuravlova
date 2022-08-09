@@ -3,17 +3,18 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { Link } from "react-router-dom";
 import { createRef } from "react";
+import PropTypes from "prop-types";
 
 import ModalCartItem from "./ModalCartItem";
 import { cartSelector } from "../redux/cart/selectors";
 import { openModal } from "../redux/cart/slice";
 import { calcTotalCount } from "../utils/calcTotalCount";
-import { getCookie } from "../utils/getCookie";
+import { getCookie } from "../utils/cookies";
 import { filterSelector } from "../redux/filter/selectors";
+import { MY_BAG, TOTAL, VIEW_BAG, CHECK_OUT } from "../constants";
 
 const mapStateToProps = (state) => ({
-  items: cartSelector(state).items,
-  opened: cartSelector(state).opened,
+  cartItems: cartSelector(state).items,
   totalPrice: cartSelector(state).totalPrice,
   currencies: filterSelector(state).currencies,
 });
@@ -23,61 +24,93 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class ModalCart extends Component {
+  static propTypes = {
+    cartItems: PropTypes.arrayOf(PropTypes.object),
+    totalPrice: PropTypes.number,
+    currencies: PropTypes.arrayOf(PropTypes.object),
+    openModal: PropTypes.func,
+  };
+
+  static defaultProps = {
+    cartItems: [],
+    totalPrice: 0,
+    currencies: [],
+  };
+
   ref = createRef();
+
   state = {
     totalCount: 0,
   };
 
   componentDidMount() {
-    const totalCount = calcTotalCount(this.props.items);
+    const { cartItems } = this.props;
+    const totalCount = calcTotalCount(cartItems);
     this.setState({ totalCount });
     document.addEventListener("click", this.handleOutsideClick, false);
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(prevProps) {
+    const { cartItems } = this.props;
+    const cartItemsCount = calcTotalCount(cartItems);
+    const prevItemsCount = calcTotalCount(prevProps.cartItems);
+    if (cartItemsCount !== prevItemsCount) {
+      this.setState({ totalCount: cartItemsCount });
+    }
+  }
 
   componentWillUnmount() {
     document.removeEventListener("click", this.handleOutsideClick, false);
   }
 
   handleCloseModal = () => {
-    this.props.openModal(false);
-    document.body.style.overflow = "scroll";
+    const { openModal } = this.props;
+    openModal(false);
+    this.changeBodyStyle();
   };
 
   handleOutsideClick = ({ target }) => {
-    if (!this.ref.current.contains(target)) {
-      this.props.openModal(false);
-      document.body.style.overflow = "scroll";
+    const { current } = this.ref;
+    const { openModal } = this.props;
+    if (!current.contains(target)) {
+      openModal(false);
+      this.changeBodyStyle();
     }
   };
 
-  get template() {
+  changeBodyStyle() {
+    document.body.style.overflow = "scroll";
+  }
+
+  render() {
+    const { totalCount } = this.state;
+    const { cartItems, currencies, totalPrice } = this.props;
+    const itemsCount = `${totalCount} item${totalCount > 1 ? "s" : ""}`;
     return (
       <div className="modal">
         <div className="modal__content" ref={this.ref}>
           <div className="modal__header">
-            <p>My bag</p>
-            <p>
-              ,{this.state.totalCount} item
-              {this.state.totalCount > 1 && "s"}
-            </p>
+            <p>{MY_BAG},</p>
+            <p>{itemsCount}</p>
           </div>
           <div className="modal__products">
-            {this.props.items.map((item, index) => (
-              <ModalCartItem key={`${item.id}_${index}`} item={item} />
+            {cartItems.map((cartItem, index) => (
+              <ModalCartItem
+                key={`${cartItem.id}_${index}`}
+                cartItem={cartItem}
+              />
             ))}
           </div>
 
           <div className="modal__content-info">
-            <p>Total</p>
+            <p>{TOTAL}</p>
             <p>
-              {this.props.currencies.map((item) => {
-                if (item.label === getCookie("activeCurrency")) {
-                  return item.symbol;
+              {currencies.map((currency) => {
+                if (currency.label === getCookie("activeCurrency")) {
+                  return currency.symbol;
                 }
               })}
-              {this.props.totalPrice}
+              {totalPrice}
             </p>
           </div>
           <div className="modal__content-bottom">
@@ -86,21 +119,16 @@ class ModalCart extends Component {
                 onClick={() => this.handleCloseModal()}
                 className="button button--modal button--modal--view"
               >
-                VIEW BAG
+                {VIEW_BAG}
               </div>
             </Link>
-            {/* make constants */}
             <div className="button button--modal button--modal--check">
-              CHECK OUT
+              {CHECK_OUT}
             </div>
           </div>
         </div>
       </div>
     );
-  }
-
-  render() {
-    return this.template;
   }
 }
 

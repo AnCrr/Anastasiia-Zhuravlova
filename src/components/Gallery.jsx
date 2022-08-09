@@ -1,33 +1,40 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Gallery extends Component {
-  state = {
-    activeIdx: 0,
+  static propTypes = {
+    images: PropTypes.arrayOf(PropTypes.string),
   };
 
-  handleSetImage(activeIdx) {
-    this.setState({ activeIdx });
+  static defaultProps = {
+    images: [],
+  };
+
+  state = {
+    activeImgIdx: 0,
+  };
+
+  handleSetImage(activeImgIdx) {
+    this.setState({ activeImgIdx });
   }
 
   render() {
+    const { images } = this.props;
+    const { activeImgIdx } = this.state;
     return (
       <div>
         <div className="active-image">
-          <img
-            src={this.props.images && this.props.images[this.state.activeIdx]}
-            alt="activeImage"
-          />
+          <img src={images[activeImgIdx]} alt="activeImage" />
         </div>
         <div className="images-gallery">
-          {this.props.images &&
-            this.props.images.map((image, index) => (
-              <img
-                onClick={() => this.handleSetImage(index)}
-                key={index}
-                src={image}
-                alt="pic"
-              />
-            ))}
+          {images.map((image, index) => (
+            <img
+              onClick={() => this.handleSetImage(index)}
+              key={index}
+              src={image}
+              alt="pic"
+            />
+          ))}
         </div>
       </div>
     );

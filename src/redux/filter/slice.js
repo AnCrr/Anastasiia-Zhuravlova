@@ -1,11 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCategoryFromLS } from "../../utils/getCategoryFromLS";
-import { getCookie } from "../../utils/getCookie";
+import { getCookie } from "../../utils/cookies";
 
-const { category } = getCategoryFromLS();
 const activeCurrency = getCookie("activeCurrency");
 const initialState = {
-  category,
   activeCurrency,
   currencies: [],
 };
@@ -14,9 +11,6 @@ const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setCategory(state, action) {
-      state.category = action.payload;
-    },
     setActiveCurrency(state, action) {
       state.activeCurrency = action.payload;
     },
@@ -26,7 +20,6 @@ const filterSlice = createSlice({
   },
 });
 
-export const { setCategory, setActiveCurrency, setCurrencies } =
-  filterSlice.actions;
+export const { setActiveCurrency, setCurrencies } = filterSlice.actions;
 
 export default filterSlice.reducer;

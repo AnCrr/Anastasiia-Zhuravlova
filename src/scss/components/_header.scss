@@ -5,31 +5,7 @@
     left: 0;
     top: 0;
 
-    &__navigation{
-        display: flex;
-        align-items: center;
-        //padding: 0;
-        max-width: 234px;
-        max-height: 56px;
-
-                & span{
-                    cursor: pointer;
-                    padding-left: 16px;
-                    padding-right: 16px;
-                    align-items: flex-end;
-                    //padding: 0px;
-                    
-                    width: 97px;
-                    height: 56px;
-                    
-                &.active{
-                    color: $light-green;
-                    border-bottom: 1px solid $light-green;
-                }
-                    
-
-    }
-    }
+    
     &__logo{
         position: absolute;
         width: 41px;
@@ -77,7 +53,6 @@
         position: absolute;
         z-index: 1;
         left: 50%;
-        // right: 6.11%;
         bottom: 55%;
         background: #1D1F22;
         border-radius: 50%;

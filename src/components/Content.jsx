@@ -1,22 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "@reduxjs/toolkit";
+import PropTypes from "prop-types";
 
 import ProductBlock from "./ProductBlock";
-import ModalCart from "./ModalCart";
 import { fetchProductsData } from "../graphQL/api";
-import { cartSelector } from "../redux/cart/selectors";
-import { filterSelector } from "../redux/filter/selectors";
-import { makeCategoryTitle } from "../utils/makeCategoryTitle";
 import { setProducts } from "../redux/products/slice";
 import { productSelector } from "../redux/products/selectors";
-
-import fsdfdsf from "../utils/addItemToCart";
+import { withParams } from "../utils/adaptHook";
 
 const mapStateToProps = (state) => ({
-  category: filterSelector(state).category,
   products: productSelector(state).products,
-  opened: cartSelector(state).opened,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -24,38 +18,52 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class Content extends Component {
-  state = {};
+  static propTypes = {
+    location: PropTypes.object,
+    params: PropTypes.object,
+    products: PropTypes.arrayOf(PropTypes.object).isRequired,
+    setProducts: PropTypes.func,
+  };
+
+  static defaultProps = {
+    location: {},
+    params: {},
+    category: "all",
+    products: [],
+  };
 
   componentDidMount() {
-    this.fetchData(this.props.category || "all");
+    const activeCategory = this.props.params.category;
+    this.fetchProducts(activeCategory);
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.category && this.props.category !== prevProps.category) {
-      this.fetchData(this.props.category);
+    const activeCategory = this.props.params.category;
+    const prevCategory = prevProps.params.category;
+    if (activeCategory !== prevCategory) {
+      this.fetchProducts(activeCategory);
     }
   }
-  // check condition
 
-  fetchData = async (categoryName) => {
+  fetchProducts = async (categoryName) => {
     const { category } = await fetchProductsData(categoryName);
     this.props.setProducts(category.products);
   };
 
+  formatCategoryTitle = (value) => {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  };
+
   render() {
+    const activeCategory = this.props.params.category;
+    const { products } = this.props;
     return (
       <div className="content">
-        {/* {this.props.opened && <ModalCart />} */}
         <div className="title">
-          <h2>
-            {this.props.category
-              ? makeCategoryTitle(this.props.category)
-              : "All"}
-          </h2>
-          {/* fix */}
+          <h2>{this.formatCategoryTitle(activeCategory)}</h2>
         </div>
         <div className="content__products">
-          {this.props.products.map((product) => (
+          {products.map((product) => (
             <ProductBlock key={product.id} product={product} />
           ))}
         </div>
@@ -64,4 +72,7 @@ class Content extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Content);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withParams(Content));

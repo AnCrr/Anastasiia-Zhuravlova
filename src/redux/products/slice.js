@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { reduceAttrs } from "../../utils/reduceAttrs";
+import { reduceAttributes } from "../../utils/reduceAttributes";
 
 const initialState = {
   products: [],
@@ -8,7 +8,7 @@ const initialState = {
 
 const modifyProductsData = (data) => {
   return data.map((product) => {
-    return { ...product, attributes: reduceAttrs(product.attributes) };
+    return { ...product, attributes: reduceAttributes(product.attributes) };
   });
 };
 
