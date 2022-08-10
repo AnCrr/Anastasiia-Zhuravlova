@@ -8,10 +8,11 @@ import PropTypes from "prop-types";
 import ModalCartItem from "./ModalCartItem";
 import { cartSelector } from "../redux/cart/selectors";
 import { openModal } from "../redux/cart/slice";
-import { calcTotalCount } from "../utils/calcTotalCount";
+import { calcTotalCount } from "../utils/cart";
 import { getCookie } from "../utils/cookies";
 import { filterSelector } from "../redux/filter/selectors";
 import { MY_BAG, TOTAL, VIEW_BAG, CHECK_OUT } from "../constants";
+import { EmptyCart } from "./EmptyCart";
 
 const mapStateToProps = (state) => ({
   cartItems: cartSelector(state).items,
@@ -69,10 +70,10 @@ class ModalCart extends Component {
     this.changeBodyStyle();
   };
 
-  handleOutsideClick = ({ target }) => {
+  handleOutsideClick = (event) => {
     const { current } = this.ref;
     const { openModal } = this.props;
-    if (!current.contains(target)) {
+    if (!event.path.includes(current)) {
       openModal(false);
       this.changeBodyStyle();
     }
@@ -93,14 +94,19 @@ class ModalCart extends Component {
             <p>{MY_BAG},</p>
             <p>{itemsCount}</p>
           </div>
-          <div className="modal__products">
-            {cartItems.map((cartItem, index) => (
-              <ModalCartItem
-                key={`${cartItem.id}_${index}`}
-                cartItem={cartItem}
-              />
-            ))}
-          </div>
+
+          {cartItems.length > 0 ? (
+            <div className="modal__products">
+              {cartItems.map((cartItem, index) => (
+                <ModalCartItem
+                  key={`${cartItem.id}_${index}`}
+                  cartItem={cartItem}
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyCart />
+          )}
 
           <div className="modal__content-info">
             <p>{TOTAL}</p>

@@ -26,26 +26,14 @@ class ProductBlock extends Component {
   handleAddItem = () => {
     const { product, addProduct } = this.props;
     const { attributes } = product;
-    const activeAttributes = attributes.reduce((accum, attr) => {
-      accum.push({ id: attr.id, value: attr.values[0] });
-      return accum;
-    }, []);
+    const activeAttributes = attributes.map((attr) => ({
+      id: attr.id,
+      value: attr.values[0],
+    }));
     const productInfo = { ...product, activeAttributes };
+
     addProduct(productInfo);
   };
-
-  // map doesn't work?
-  // handleAddItem = () => {
-  //   const { product, addProduct } = this.props;
-  //   const { attributes } = product;
-  //   const result = [];
-  //   const activeAttributes = attributes.map((attr) => {
-  //     result.push({ id: attr.id, value: attr.values[0] });
-  //     return result;
-  //   });
-  //   const productInfo = { ...product, activeAttributes: result };
-  //   addProduct(productInfo);
-  // };
 
   render() {
     const { product } = this.props;

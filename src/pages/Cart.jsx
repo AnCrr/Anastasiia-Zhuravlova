@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { cartSelector } from "../redux/cart/selectors";
 import { filterSelector } from "../redux/filter/selectors";
 import CartItem from "../components/CartItem";
-import { calcTotalCount } from "../utils/calcTotalCount";
+import { calcTotalCount } from "../utils/cart";
 import { getCookie } from "../utils/cookies";
 import { CART, TAX, QUANTITY, TOTAL, ORDER } from "../constants";
 

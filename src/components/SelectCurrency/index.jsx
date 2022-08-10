@@ -61,9 +61,9 @@ class SelectCurrency extends Component {
   };
 
   handleClickOutside = (event) => {
-    const _event = event;
-    // console.log(_event.path.includes(this.ref.current));
-    if (!_event.path.includes(this.ref.current)) {
+    // event.stopImmediatePropagation();
+
+    if (!event.path.includes(this.ref.current)) {
       this.setState({ isPopupOpened: false });
     }
   }; //changed condition

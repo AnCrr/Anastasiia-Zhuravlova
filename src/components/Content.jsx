@@ -7,7 +7,7 @@ import ProductBlock from "./ProductBlock";
 import { fetchProductsData } from "../graphQL/api";
 import { setProducts } from "../redux/products/slice";
 import { productSelector } from "../redux/products/selectors";
-import { withParams } from "../utils/adaptHook";
+import { withParams } from "./hooks/withParams";
 
 const mapStateToProps = (state) => ({
   products: productSelector(state).products,

@@ -1,12 +1,15 @@
 .content{
     display: flex;
+    
    
     &__products {
         position: relative;
         display: flex;
+        justify-content: flex-start;
         flex-wrap: wrap;
         top: 190px;
-        left: 50px;
+        left: 65px;
+        min-width: 1400px;
     
         &__block{
             position: relative;
@@ -17,7 +20,7 @@
             padding: 16px;
             max-width: 386px;
             max-height: 444px;
-            margin: 0 15px;
+            margin: 0 25px;
 
             &.unactive{
                 opacity: 60%;

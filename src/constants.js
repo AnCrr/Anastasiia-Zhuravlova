@@ -12,3 +12,6 @@ export const ORDER = "Order";
 
 export const ADD_TO_CART = "Add to cart";
 export const PRICE = "Price";
+
+export const ADITTION_OPERATION = "ADITTION_OPERATION";
+export const SUBTRACTION_OPERATION = "SUBTRACTION_OPERATION";

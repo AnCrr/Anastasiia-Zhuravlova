@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 
 import { filterSelector } from "../../redux/filter/selectors";
-import { addProduct, decreaseCount } from "../../redux/cart/slice";
+import { addProduct, removeProduct } from "../../redux/cart/slice";
 import { PlusIcon } from "./svg/PlusIcon";
 import { MinusIcon } from "./svg/MinusIcon";
 import { ArrowIcon } from "./svg/ArrowIcon";
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addProduct: bindActionCreators(addProduct, dispatch),
-  decreaseCount: bindActionCreators(decreaseCount, dispatch),
+  removeProduct: bindActionCreators(removeProduct, dispatch),
 });
 
 class CartItem extends Component {
@@ -39,14 +39,16 @@ class CartItem extends Component {
 
   handleAddProduct = () => {
     const { activeAttributes } = this.state;
-    const { cartItem } = this.props;
-    this.props.addProduct({ ...cartItem, activeAttributes });
+    const { cartItem, addProduct } = this.props;
+
+    addProduct({ ...cartItem, activeAttributes });
   };
 
   handleDecreaseCount = () => {
-    const { id } = this.props.cartItem;
+    const { cartItem, removeProduct } = this.props;
+    const { id } = cartItem;
     const { activeAttributes } = this.state;
-    this.props.decreaseCount({ id, activeAttributes });
+    removeProduct({ id, activeAttributes });
   };
 
   handleClickLeftArrow = () => {
@@ -105,7 +107,7 @@ class CartItem extends Component {
                 </div>
               </button>
               <span>{count}</span>
-              <button disabled={count === 1} onClick={this.handleDecreaseCount}>
+              <button onClick={this.handleDecreaseCount}>
                 <div className="cart-item__actions--vectors">
                   <MinusIcon />
                 </div>

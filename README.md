@@ -72,12 +72,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 TODO:
 
 - check outsideClick on select(why does not popup closes when I click on modal)
-- fix adding new product with new attributes in cart (CartItem)
-- check map in ProductBlock
-- move productblock styles to separeted style sheet
 - check attributes classnames
-- calcTotalPrice redo to be beautiful
-- make reexports of components
 
 changes:
 
@@ -96,3 +91,6 @@ changes:
 - medium font added
 - findExistedItem united with addProductToCart, now it`s handleProducrInCart
 - separated svg
+- did not move productblock styles to separeted style sheet not to destroy bem methodology in content component
+- removed changing attributes on cart page
+- calcTotalPrice rewrote to be beautiful

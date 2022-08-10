@@ -1,13 +1,11 @@
 .navigation{
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0;
     position: absolute;
-    width: 234px;
-    height: 56px;
-    left: 101px;
-    bottom: 0;
+    min-width: 234px;
+    max-width: 234px;
+    min-height: 56px;
+    max-height: 56px;
+    left: 95px;
 
     &__categories{
         display: flex;
@@ -15,21 +13,43 @@
         max-width: 234px;
         max-height: 56px;
         text-transform: uppercase;
+        text-align: center;
 
                 a{
                     cursor: pointer;
                     padding-left: 16px;
                     padding-right: 16px;
                     align-items: flex-end;
-                    width: 97px;
-                    height: 56px;
+                    min-width: 97px;
+                    max-width: 97px;
+                    min-height: 56px;
+                    max-height: 56px;
                     
                 &.active{
+                    font-weight: 600;
                     color: $light-green;
-                    border-bottom: 1px solid $light-green;
+                    border-bottom: 1.5px solid $light-green;
                 }
-                    
 
+                @media(max-width:360px){
+                    padding-left: 4px;
+                    padding-right: 4px;
+                    // min-width: 70px;
+                    max-width: 70px;
+                    // min-height: 36px;
+                    max-height: 36px;
+                    }
     }
+
+    @media(max-width:360px){
+        // min-width: 150px;
+        max-width: 300px ;
+        }
     }
+    @media(max-width:360px){
+        left: 30px;
+        font-size: 14px;
+        // min-width: 150px;
+        max-width: 300px ;
+        }
 }

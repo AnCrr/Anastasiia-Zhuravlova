@@ -4,7 +4,7 @@ import parse from "html-react-parser";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 
-import { withParams } from "../utils/adaptHook";
+import { withParams } from "../components/hooks/withParams";
 import { fetchProductById } from "../graphQL/api";
 import { filterSelector } from "../redux/filter/selectors";
 import { reduceAttributes } from "../utils/reduceAttributes";

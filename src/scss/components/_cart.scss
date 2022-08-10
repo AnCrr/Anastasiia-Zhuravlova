@@ -1,7 +1,6 @@
 .cart {
     position: relative;
-    top: 10px;
-    left: 50px;
+    top: 80px;
     
     &__title{
         h1{
@@ -32,10 +31,14 @@
             position: absolute;
             left: 0;
             top: 30px;
+
             p{
                 font-weight: 400;
                 text-align: left;
                 padding: 3px 0;
+            }
+            :last-child{
+                font-weight: 500;
             }
         }
         

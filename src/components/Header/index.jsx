@@ -4,13 +4,13 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { withParams } from "../../utils/adaptHook";
+import { withParams } from "../hooks/withParams";
 import Categories from "../Categories";
 import SelectCurrency from "../SelectCurrency";
 import { openModal } from "../../redux/cart/slice";
 import { cartSelector } from "../../redux/cart/selectors";
 import { setCartToLs } from "../../utils/cart";
-import { calcTotalCount } from "../../utils/calcTotalCount";
+import { calcTotalCount } from "../../utils/cart";
 import { filterSelector } from "../../redux/filter/selectors";
 import { setCurrencies, setActiveCurrency } from "../../redux/filter/slice";
 import { getCookie, setCookie } from "../../utils/cookies";
@@ -84,7 +84,8 @@ class Header extends Component {
 
   handleOpenModal = (event) => {
     const { openModal, isModalOpened } = this.props;
-    event.stopPropagation();
+    event.stopPropagation(); // из-за этого не закрывается поп-ап
+
     openModal(!isModalOpened);
     this.changeBodyStyle(isModalOpened);
   };
@@ -126,7 +127,7 @@ class Header extends Component {
                 disabled={
                   location.pathname === "/cart" || cartItems.length === 0
                 }
-                onClick={(event) => this.handleOpenModal(event)}
+                onClick={this.handleOpenModal}
                 className="button button--cart"
               >
                 <CartIcon />

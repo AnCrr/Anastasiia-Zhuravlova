@@ -4,7 +4,7 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 import PropTypes from "prop-types";
 
 import { filterSelector } from "../../redux/filter/selectors";
-import { addProduct, decreaseCount } from "../../redux/cart/slice";
+import { addProduct, removeProduct } from "../../redux/cart/slice";
 import Attributes from "../Attributes";
 import { PlusIcon } from "./svg/PlusIcon";
 import { MinusIcon } from "./svg/MinusIcon";
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addProduct: bindActionCreators(addProduct, dispatch),
-  decreaseCount: bindActionCreators(decreaseCount, dispatch),
+  removeProduct: bindActionCreators(removeProduct, dispatch),
 });
 
 class ModalCartItem extends Component {
@@ -23,7 +23,7 @@ class ModalCartItem extends Component {
     cartItem: PropTypes.object,
     currency: PropTypes.string,
     addProduct: PropTypes.func,
-    decreaseCount: PropTypes.func,
+    removeProduct: PropTypes.func,
   };
 
   static defaultProps = {
@@ -42,15 +42,16 @@ class ModalCartItem extends Component {
     addProduct(cartItem);
   };
 
-  handleDecreaseCount = () => {
-    const { decreaseCount, cartItem } = this.props;
+  handleRemoveProduct = () => {
+    const { removeProduct, cartItem } = this.props;
     const { id, activeAttributes } = cartItem;
-    decreaseCount({ id, activeAttributes });
+    removeProduct({ id, activeAttributes });
   };
 
   renderPrices() {
     const { currency, cartItem } = this.props;
     const { prices } = cartItem;
+
     return prices.map((price, index) => {
       return (
         price.currency.label === currency && (
@@ -89,7 +90,7 @@ class ModalCartItem extends Component {
             </div>
           </button>
           <span>{count}</span>
-          <button disabled={count === 1} onClick={this.handleDecreaseCount}>
+          <button onClick={this.handleRemoveProduct}>
             <div className="modal__cart-item__actions--vectors">
               <MinusIcon />
             </div>
