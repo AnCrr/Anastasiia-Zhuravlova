@@ -23,10 +23,7 @@
     &__info{
         display: flex;
         flex-direction: column;
-        // justify-content: space-between;
-        
-        min-height: 336px; // do I need this?
-        // or better to set paddings to all the elements??
+        min-height: 336px; 
     }
 
     &__title{
@@ -61,6 +58,7 @@
         flex-direction: column;
         justify-content: space-around;
     }
+
     &__actions{
         display: flex;
         flex-direction: column;
@@ -72,13 +70,11 @@
         max-height: 288px;
 
         &--vectors{
-            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100%;
             min-width: 100%;
-         
         }
 
         button{
@@ -93,7 +89,6 @@
             background-color: white;
             font-size: 24px;
             text-align: center;
-        
         }
 
         span{
@@ -109,42 +104,32 @@
         max-width: 200px;
         min-height: 288px;
         max-height: 288px;
-        // padding-top: 5px;
 
         img{
             max-width: 100%;
             max-height: 100%;
-            // object-fit: cover;
+            
         }
 
-        &--arrow{
-            
-            &--left{
+        &--arrows{
+            position: absolute;
+            bottom: 20px;
+            left: 115px;
+            min-height: 24px;
+            max-height: 24px;
+            min-width: 56px;
+            max-width: 56px;
+            display: flex;
+            justify-content: space-between;
+
+            div{
                 cursor: pointer;
                 display: flex;
-                position: absolute;
-                left: 95px;
-                bottom: 16px;
                 min-height: 24px;
                 max-height: 24px;
                 min-width: 24px;
                 max-width: 24px;
-                background-color: rgba(0, 0, 0, 0.73);;
-                justify-content: center;
-                align-items: center;
-                
-            }
-            &--right{
-                cursor: pointer;
-                display: flex;
-                position: absolute;
-                left: 130px;
-                bottom: 16px;
-                min-height: 24px;
-                max-height: 24px;
-                min-width: 24px;
-                max-width: 24px;
-                background-color: rgba(0, 0, 0, 0.73);;
+                background-color: rgba(0, 0, 0, 0.73);
                 justify-content: center;
                 align-items: center;
             }

@@ -20,10 +20,9 @@ const cartSlice = createSlice({
       state.totalPrice = calcTotalPrice(state.items);
     },
     removeProduct(state, action) {
-      removeProductInRedux(state.items, action.payload);
+      state.items = removeProductInRedux(state.items, action.payload);
       state.totalPrice = calcTotalPrice(state.items);
     },
-    // TODO: (acrr) возможно стоит вынести в отдельный стейт редакса
     openModal(state, action) {
       state.isModalOpened = action.payload;
     },

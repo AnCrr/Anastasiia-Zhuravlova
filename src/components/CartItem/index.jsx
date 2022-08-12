@@ -33,21 +33,19 @@ class CartItem extends Component {
   };
 
   state = {
-    activeAttributes: this.props.cartItem.activeAttributes,
     activeIdx: 0,
   };
 
   handleAddProduct = () => {
-    const { activeAttributes } = this.state;
     const { cartItem, addProduct } = this.props;
+    const { activeAttributes } = cartItem;
 
     addProduct({ ...cartItem, activeAttributes });
   };
 
   handleDecreaseCount = () => {
     const { cartItem, removeProduct } = this.props;
-    const { id } = cartItem;
-    const { activeAttributes } = this.state;
+    const { id, activeAttributes } = cartItem;
     removeProduct({ id, activeAttributes });
   };
 
@@ -80,8 +78,9 @@ class CartItem extends Component {
   };
 
   render() {
-    const { brand, name, attributes, count, gallery } = this.props.cartItem;
-    const { activeAttributes, activeIdx } = this.state;
+    const { brand, name, attributes, count, gallery, activeAttributes } =
+      this.props.cartItem;
+    const { activeIdx } = this.state;
     return (
       <div className="cart-item">
         <div className="border"></div>
@@ -115,17 +114,13 @@ class CartItem extends Component {
             </div>
             <div className="cart-item__image">
               <img src={gallery[activeIdx]} alt="product" />
-              <div
-                className="cart-item__image--arrow--left"
-                onClick={() => this.handleClickLeftArrow()}
-              >
-                <ArrowIcon rotate={0} />
-              </div>
-              <div
-                className="cart-item__image--arrow--right"
-                onClick={() => this.handleClickRightArrow()}
-              >
-                <ArrowIcon rotate={180} />
+              <div className="cart-item__image--arrows">
+                <div onClick={() => this.handleClickLeftArrow()}>
+                  <ArrowIcon rotate={0} />
+                </div>
+                <div onClick={() => this.handleClickRightArrow()}>
+                  <ArrowIcon rotate={180} />
+                </div>
               </div>
             </div>
           </div>

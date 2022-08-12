@@ -1,15 +1,28 @@
-.content{
-    display: flex;
-    
-   
-    &__products {
-        position: relative;
+.content{ 
+
+   &__container{
         display: flex;
+        flex-direction: column;
+   }
+
+   &__title  {
+
+    h2{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 42px;
+        line-height: 160%;
+    }
+}
+
+    &__products {
+        display: flex;
+        flex-direction: row;
         justify-content: flex-start;
         flex-wrap: wrap;
-        top: 190px;
-        left: 65px;
-        min-width: 1400px;
+        margin: 0 -20px;
+        min-width: 100%;
+        padding-top: 100px;
     
         &__block{
             position: relative;
@@ -20,7 +33,7 @@
             padding: 16px;
             max-width: 386px;
             max-height: 444px;
-            margin: 0 25px;
+            margin: 0 20px;
 
             &.unactive{
                 opacity: 60%;
@@ -65,8 +78,8 @@
             &-info{
                 display: flex;
                 flex-direction: column;
+                padding-top: 10px;
                 text-align: left;
-                padding: 0;
                 width: 354px;
                 height: 58px;
             }

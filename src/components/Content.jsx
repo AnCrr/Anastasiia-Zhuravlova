@@ -58,8 +58,8 @@ class Content extends Component {
     const activeCategory = this.props.params.category;
     const { products } = this.props;
     return (
-      <div className="content">
-        <div className="title">
+      <div className="wrapper__content__container">
+        <div className="content__title">
           <h2>{this.formatCategoryTitle(activeCategory)}</h2>
         </div>
         <div className="content__products">

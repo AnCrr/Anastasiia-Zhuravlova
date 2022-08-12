@@ -4,9 +4,14 @@
     max-width: 100%;
     min-width: 1440px;
     min-height: 100vh;
-    top: 54px;
+    max-height: 100vh;
+    top: 75px;
+    left: 0;
     z-index: 16;
     background: rgba(57, 55, 72, 0.22);
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5.5rem;
 
     &__header{
         display: flex;
@@ -26,15 +31,13 @@
     &__content{
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         padding: 32px 16px;
-        z-index: 6;
-        position: absolute;
         min-width: 325px;
         max-width: 325px;
+        min-height: 10px;
         max-height: 677px;
-        left: 1030px;
         background: #FFFFFF;
 
         &-info{
@@ -60,10 +63,6 @@
             min-width: 292px;
             max-height: 43px;
         }
-
-        @media(max-width:360px){
-            left: 90px;
-            }
         
     }
     &__products{
@@ -71,10 +70,6 @@
         margin: 20px 0;
     }
 
-    @media(max-width:360px){
-        max-width: 360px;
-        min-height: 100vh;
-        }
 }
 
 

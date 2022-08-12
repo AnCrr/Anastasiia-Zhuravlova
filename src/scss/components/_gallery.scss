@@ -1,0 +1,39 @@
+.gallery{
+    display: flex;
+
+    &__active-image{
+        min-width: 610px;
+        max-width: 610px;
+        max-height: 511px;
+        min-height: 511px;
+        margin: 0 100px 0 40px;
+    
+        img{
+            max-width: 610px;
+            max-height: 511px;
+            min-height: 511px;
+        }
+    }
+    
+    &__images{
+        min-width: 55px;
+        display: flex;
+        flex-direction: column;
+        margin: -20px 0;
+
+        &--wrapper{
+            min-width: 80px;
+            min-height: 80px;
+
+            img{
+                cursor: pointer;
+                max-width: 80px;
+                max-height: 80px;
+                margin: 20px 0;
+            }
+        }
+    
+        
+    }
+    
+}

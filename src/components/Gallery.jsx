@@ -22,19 +22,21 @@ class Gallery extends Component {
     const { images } = this.props;
     const { activeImgIdx } = this.state;
     return (
-      <div>
-        <div className="active-image">
-          <img src={images[activeImgIdx]} alt="activeImage" />
-        </div>
-        <div className="images-gallery">
+      <div className="gallery">
+        <div className="gallery__images">
           {images.map((image, index) => (
-            <img
-              onClick={() => this.handleSetImage(index)}
-              key={index}
-              src={image}
-              alt="pic"
-            />
+            <div className="gallery__images--wrapper">
+              <img
+                onClick={() => this.handleSetImage(index)}
+                key={index}
+                src={image}
+                alt="pic"
+              />
+            </div>
           ))}
+        </div>
+        <div className="gallery__active-image">
+          <img src={images[activeImgIdx]} alt="activeImage" />
         </div>
       </div>
     );

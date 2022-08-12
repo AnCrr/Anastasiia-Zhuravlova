@@ -61,12 +61,10 @@ class SelectCurrency extends Component {
   };
 
   handleClickOutside = (event) => {
-    // event.stopImmediatePropagation();
-
     if (!event.path.includes(this.ref.current)) {
       this.setState({ isPopupOpened: false });
     }
-  }; //changed condition
+  };
 
   getCurrencies = async () => {
     const { setCurrencies } = this.props;
@@ -92,7 +90,7 @@ class SelectCurrency extends Component {
           className="select__label"
         >
           <span>{this.findCurrency()}</span>
-          <ArrowIcon />
+          <ArrowIcon className={isPopupOpened ? "active" : ""} />
         </button>
         {isPopupOpened && (
           <div className="select__popup">

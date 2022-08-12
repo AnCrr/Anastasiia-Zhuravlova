@@ -27,23 +27,19 @@ class Categories extends Component {
 
   render() {
     return (
-      <div className="navigation">
-        <div className="navigation__categories">
-          {this.state.categories.map((category, index) => {
-            return (
-              <Link
-                to={`/category/${category.name}`}
-                key={index}
-                className={
-                  category.name === this.props.location ? "active" : ""
-                }
-                onClick={this.onChangeActive}
-              >
-                {category.name}
-              </Link>
-            );
-          })}
-        </div>
+      <div className="navigation__categories">
+        {this.state.categories.map((category, index) => {
+          return (
+            <Link
+              to={`/category/${category.name}`}
+              key={index}
+              className={category.name === this.props.location ? "active" : ""}
+              onClick={this.onChangeActive}
+            >
+              {category.name}
+            </Link>
+          );
+        })}
       </div>
     );
   }

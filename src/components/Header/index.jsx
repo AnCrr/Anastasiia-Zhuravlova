@@ -84,7 +84,7 @@ class Header extends Component {
 
   handleOpenModal = (event) => {
     const { openModal, isModalOpened } = this.props;
-    event.stopPropagation(); // из-за этого не закрывается поп-ап
+    event.stopPropagation();
 
     openModal(!isModalOpened);
     this.changeBodyStyle(isModalOpened);
@@ -103,41 +103,37 @@ class Header extends Component {
     const { location, cartItems, isModalOpened } = this.props;
     const { totalCount } = this.state;
     return (
-      <div className="header">
-        <div className="container">
+      <div className="header__container">
+        <div className="header__navigation">
           <Categories location={activeCategory} />
+        </div>
+        <div className="header__logo">
           <Link to="/category/all">
-            <div className="header__logo">
-              <LogoIcon />
-            </div>
+            <LogoIcon />
           </Link>
-          <div
-            ref={(node) => {
-              this.node = node;
-            }}
-            className="header__cart"
-          >
-            <div className="header__cart-actions">
-              <div className="button button--currency">
-                <div className="--spacer-xl"></div>
-                <div className="--spacer-xl"></div>
-                <SelectCurrency />
-              </div>
-              <button
-                disabled={
-                  location.pathname === "/cart" || cartItems.length === 0
-                }
-                onClick={this.handleOpenModal}
-                className="button button--cart"
-              >
-                <CartIcon />
-                {totalCount > 0 && (
-                  <div className="header__total-count">
-                    <span>{totalCount}</span>
-                  </div>
-                )}
-              </button>
-            </div>
+        </div>
+        <div
+          ref={(node) => {
+            this.node = node;
+          }}
+          className="header__actions"
+        >
+          <div className="button button--currency">
+            <SelectCurrency />
+          </div>
+          <div className="button button--cart">
+            {" "}
+            <button
+              disabled={location.pathname === "/cart" || cartItems.length === 0}
+              onClick={this.handleOpenModal}
+            >
+              <CartIcon />
+              {totalCount > 0 && (
+                <div className="header__total-count">
+                  <span>{totalCount}</span>
+                </div>
+              )}
+            </button>
           </div>
           {isModalOpened && <ModalCart />}
         </div>

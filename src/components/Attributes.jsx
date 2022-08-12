@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 class Attributes extends Component {
   static propTypes = {
     attributes: PropTypes.arrayOf(PropTypes.object).isRequired,
-    activeAttributes: PropTypes.arrayOf(PropTypes.object),
+    activeAttributes: PropTypes.arrayOf(PropTypes.object).isRequired,
     isProduct: PropTypes.bool,
     className: PropTypes.string,
   };
@@ -15,9 +15,12 @@ class Attributes extends Component {
     className: "",
   };
 
-  showAttributes = (attributes, activeAttributes) => {
+  renderAttributes = (attributes, activeAttributes) => {
     return attributes.map((attribute, index) => {
-      const current = activeAttributes.find((attr) => attr.id === attribute.id);
+      const current =
+        activeAttributes.find((attr) => {
+          return attr.id === attribute.id;
+        }) || {};
       const items = attribute.values.map((value, index) => {
         if (attribute.name === "Color") {
           return (
@@ -71,7 +74,7 @@ class Attributes extends Component {
     const { className, attributes, activeAttributes } = this.props;
     return (
       <div className={`attributes ${className}`}>
-        {this.showAttributes(attributes, activeAttributes)}
+        {this.renderAttributes(attributes, activeAttributes)}
       </div>
     );
   }

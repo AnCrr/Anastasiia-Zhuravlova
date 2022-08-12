@@ -1,6 +1,7 @@
-export const ArrowIcon = () => {
+export const ArrowIcon = ({ className }) => {
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width="8"
       height="4"

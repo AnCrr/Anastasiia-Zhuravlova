@@ -44,6 +44,7 @@ export const addProduct = (cart, product) => {
         return true;
       }
     }
+    return false;
   });
 
   if (!isProductExistInCart) {
@@ -56,8 +57,9 @@ export const addProduct = (cart, product) => {
 };
 
 export const removeProduct = (cart, product) => {
-  for (let index = 0; index < cart.length; index++) {
-    const cartItem = cart[index];
+  const newCart = [...cart];
+  for (let index = 0; index < newCart.length; index++) {
+    const cartItem = newCart[index];
 
     if (cartItem.id === product.id) {
       if (isNeedChangeCount(cartItem, product)) {
@@ -65,12 +67,13 @@ export const removeProduct = (cart, product) => {
       }
 
       if (cartItem.count < 1) {
-        cart.splice(index, 1);
+        newCart.splice(index, 1);
       }
 
       break;
     }
   }
+  return newCart;
 };
 
 export const calcTotalCount = (items) => {

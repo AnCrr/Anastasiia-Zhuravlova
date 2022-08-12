@@ -11,31 +11,24 @@ body {
 .wrapper {
     display: flex;
     flex-direction: column;
-    position: relative;
     background-color: #fff;
-    padding: 50px 0;
-    justify-content: center;
-    align-items: center;
+    padding-bottom: 50px;
     min-width: 1000px;
-  
-    @media(max-width:645px){
-      margin-top: 50px;
-    }
 
     &__header{
         min-width: 1440px;
         max-width: 1440px;
         min-height: 80px;
         max-height: 80px;
-
-        @media(max-width:360px){
-            min-width: 360px;
-            max-width: 360px;
-            }
+        padding: 20px 100px 0;
+    }
+  
+    @media(max-width:645px){
+      margin-top: 50px;
     }
 
     &__content{
-        padding-bottom: 150px;
+        padding: 80px 100px 150px;
         display: flex;
         max-width: 1440px;
     }
@@ -43,19 +36,27 @@ body {
 
 .button{
     cursor: pointer;
+
     &--currency{
-        width: 38px;
+        max-width: 38px;
         height: 29px;
     }
 
     &--cart{
         width: 20px;
         height: 20px;
-        position: absolute;
-        left: 80%;
-        right: 0%;
-        top: 5.84%;
+        position: relative;
+        min-height: 40px;
+        min-width: 40px;
         z-index: 3;
+
+        button{
+            background-color: #fff;
+            border: none;
+            padding-top: 9px;
+            padding-left: 8px;
+            cursor: pointer;
+        }
     }
 
     &--modal{
@@ -81,35 +82,6 @@ body {
             border: none;
         }
     }
-}
-
-.title  {
-    position: absolute;
-    width: 299px;
-    height: 68px;
-    top: 160px;
-    left: calc(50% - 299px/2 - 469.5px);
-    display: flex;
-    align-items: center;
-}
-
-h2{
-    font-style: normal;
-    font-weight: 400;
-    font-size: 42px;
-    line-height: 160%;
-}
-
-.--space-base{
-    width: 24px;
-    height: 24px;
-    opacity: 0;
-}
-
-.--spacer-xl{
-    width: 40px;
-    height: 40px;
-    opacity: 0;
 }
 
 .border{

@@ -1,7 +1,4 @@
 .select{
-    position: relative;
-    left: 50px;
-    bottom: 81px;
     min-width: 114px;
     min-height: 169px;
     
@@ -10,16 +7,14 @@
         align-items: center;
         background-color: white;
         border: none;
-        position: absolute;
-        left: 20px;
-        min-width: 38px;
+        padding-left: 20px;
+        justify-content: space-between;
+        min-width: 48px;
         min-height: 29px;
-        max-width: 38px;
         max-height: 29px;
+        cursor: pointer;
         
-            & span{
-                min-height: 29px;
-                min-width: 32px;
+             span{
                 max-width: 32px;
                 max-height: 29px;
                 font-style: normal;
@@ -27,11 +22,14 @@
                 font-size: 18px;
                 line-height: 160%;
                 color: $black;
-                cursor: pointer;
             }
         
-            & svg{
+             svg{
                 transform: matrix(1, 0, 0, -1, 0, 0);
+            }
+
+            .active{
+                transform: matrix(-1, 0, 0, 1, 0, 0);
             }
         }
 
@@ -39,9 +37,8 @@
             z-index: 6;
             display: flex;
             justify-content: center;
-            position: absolute;
-            top: 40px;
-            right: 0;
+            margin-top: 10px;
+            margin-right: 10px;
             box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
             text-align: left;
             font-weight: 500;
@@ -52,6 +49,7 @@
           
             ul{ 
                 padding: 15px 0;
+
                 li{
                     display: flex;
                     justify-content: center;

@@ -71,7 +71,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 TODO:
 
-- check outsideClick on select(why does not popup closes when I click on modal)
+- check bug on cart page!!!
 - check attributes classnames
 
 changes:

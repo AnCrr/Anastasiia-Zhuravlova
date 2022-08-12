@@ -88,47 +88,44 @@ class Product extends Component {
       activeAttributes,
     } = this.state.item;
     return (
-      <div className="product-wrapper">
-        <div className="product">
-          <Gallery images={gallery} />
+      <div className="product">
+        <Gallery images={gallery} />
+        <div className="product__info">
+          <div className="product__info--title">
+            <h2 className="product__info--title--brand">{brand}</h2>
+            <h2 className="product__info--title--name">{name}</h2>
+          </div>
 
-          <div className="product__info">
-            <div className="product__info--title">
-              <h2 className="product__info--title--brand">{brand}</h2>
-              <h2 className="product__info--title--name">{name}</h2>
-            </div>
-
-            <Attributes
-              attributes={attributes}
-              activeAttributes={activeAttributes}
-              isProduct={true}
-              onSetAttrs={this.handleSetAttrs}
-            />
-            <div className="product__info--price">
-              {PRICE}:
-              {prices &&
-                prices.map((price, index) => {
-                  return (
-                    price.currency.label === this.props.currency && (
-                      <p key={index}>
-                        {price.currency.symbol}
-                        {price.amount}
-                      </p>
-                    )
-                  );
-                })}{" "}
-            </div>
-            {inStock && (
-              <button
-                onClick={() => this.handleAddProduct()}
-                className="product__info--button"
-              >
-                <p>{ADD_TO_CART}</p>
-              </button>
-            )}
-            <div className="product__info--description">
-              {description && parse(description)}
-            </div>
+          <Attributes
+            attributes={attributes}
+            activeAttributes={activeAttributes}
+            isProduct={true}
+            onSetAttrs={this.handleSetAttrs}
+          />
+          <div className="product__info--price">
+            {PRICE}:
+            {prices &&
+              prices.map((price, index) => {
+                return (
+                  price.currency.label === this.props.currency && (
+                    <p key={index}>
+                      {price.currency.symbol}
+                      {price.amount}
+                    </p>
+                  )
+                );
+              })}{" "}
+          </div>
+          {inStock && (
+            <button
+              onClick={() => this.handleAddProduct()}
+              className="product__info--button"
+            >
+              <p>{ADD_TO_CART}</p>
+            </button>
+          )}
+          <div className="product__info--description">
+            {description && parse(description)}
           </div>
         </div>
       </div>
