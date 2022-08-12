@@ -57,23 +57,18 @@ export const addProduct = (cart, product) => {
 };
 
 export const removeProduct = (cart, product) => {
-  const newCart = [...cart];
-  for (let index = 0; index < newCart.length; index++) {
-    const cartItem = newCart[index];
-
+  for (let index = 0; index < cart.length; index++) {
+    const cartItem = cart[index];
     if (cartItem.id === product.id) {
       if (isNeedChangeCount(cartItem, product)) {
         --cartItem.count;
       }
 
       if (cartItem.count < 1) {
-        newCart.splice(index, 1);
+        cart.splice(index, 1);
       }
-
-      break;
     }
   }
-  return newCart;
 };
 
 export const calcTotalCount = (items) => {

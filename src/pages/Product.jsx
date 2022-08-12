@@ -101,6 +101,7 @@ class Product extends Component {
             activeAttributes={activeAttributes}
             isProduct={true}
             onSetAttrs={this.handleSetAttrs}
+            className="attributes--product"
           />
           <div className="product__info--price">
             {PRICE}:

@@ -27,7 +27,7 @@ class Attributes extends Component {
             <div
               onClick={this.handleSetAttrs}
               key={index}
-              className={`color-wrapper ${
+              className={`attribute__color-item ${
                 value === current.value ? "active" : ""
               }`}
             >
@@ -37,7 +37,7 @@ class Attributes extends Component {
                 style={{
                   backgroundColor: value,
                 }}
-                className={`color-item`}
+                className={"attribute__color"}
               ></div>
             </div>
           );
@@ -47,7 +47,9 @@ class Attributes extends Component {
             <div
               data-name={attribute.id}
               data-value={value}
-              className={`item ${value === current.value ? "active" : ""}`}
+              className={`attribute__item ${
+                value === current.value ? "active" : ""
+              }`}
             >
               {value}
             </div>
@@ -57,8 +59,8 @@ class Attributes extends Component {
 
       return (
         <div key={index}>
-          <div className={`name`}>{attribute.name}:</div>
-          <div className={`items`}>{items}</div>
+          <div className={`attribute__name`}>{attribute.name}:</div>
+          <div className={`attribute__wrapper`}>{items}</div>
         </div>
       );
     });

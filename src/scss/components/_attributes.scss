@@ -1,10 +1,8 @@
-
-
-
-
 .attributes{
     padding: 15px 0;
-    .name{
+
+   .attribute{
+    &__name{
         font-style: normal;
         font-weight: 700;
         font-size: 18px;
@@ -12,7 +10,7 @@
         text-transform: uppercase;
     }
 
-    .items{
+    &__wrapper{
         display: flex;
         flex-direction: row;
         padding: 8px 0;
@@ -22,9 +20,8 @@
         line-height: 16px;
         margin-bottom: 10px;
     }
-
-   .item{
-        cursor: pointer;
+   
+   &__item{
         padding: 12px 5px;
         font-style: normal;
         font-weight: 400;
@@ -40,10 +37,9 @@
             color: white;
             background-color: $black;
         }
-
     }
 
-    .color-wrapper{
+    &__color-item{
         justify-content: center;
         display: flex;
         min-width: 36px;
@@ -54,68 +50,83 @@
         }
         
     }
-    .color-item{
-        cursor: pointer;
+    &__color{
         min-width: 32px;
         max-width: 32px;
         min-height: 32px;
         border: 0.1px solid rgb(178, 176, 176);
         align-self: center;
     }
+   }
 
+   &--product{
+    .attribute__item{
+        cursor: pointer;
+    }
 
-    &__modal{
-        .items{
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            padding: 8px 0;
-            gap: 8px;
-            min-width: 120px;
-            flex-wrap: wrap;
-            line-height: 16px;
-        }
-    
-        .item{     
-            padding: 3px 5px;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            min-width: 24px;
-            min-height: 24px;
-            align-items: center;
-            text-align: center;
-            border: 1px solid $black;
-    
-            &.active{
-                color: white;
-                background-color: $black;
-            }
-        }
-    
-        .name{
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 16px;
-        }
-        .color-wrapper{
-            justify-content: center;
-            display: flex;
-            min-width: 20px;
-            min-height: 20px;
-    
-            &.active{
-                border: 1px solid #5ECE7B;
-            }
-            
-        }
-        .color-item{
-            min-width: 16px;
-            max-width: 16px;
-            min-height: 16px;
-            border: 0.1px solid rgb(178, 176, 176);
-            align-self: center;
-            
-        }
+    .attribute__color-item{
+        cursor: pointer;
     }
 }
+        &--modal{
+            .attribute{
+                &__wrapper{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    padding: 8px 0;
+                    gap: 8px;
+                    min-width: 120px;
+                    flex-wrap: wrap;
+                    line-height: 16px;
+                }
+            
+                &__item{     
+                    padding: 3px 5px;
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                    min-width: 24px;
+                    min-height: 24px;
+                    align-items: center;
+                    text-align: center;
+                    border: 1px solid $black;
+            
+                    &.active{
+                        color: white;
+                        background-color: $black;
+                    }
+                }
+            
+                &__name{
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 16px;
+                    text-transform: none;
+                }
+                &__color-item{
+                    justify-content: center;
+                    display: flex;
+                    min-width: 20px;
+                    min-height: 20px;
+            
+                    &.active{
+                        border: 1px solid #5ECE7B;
+                    }
+                    
+                }
+                &__color{
+                    min-width: 16px;
+                    max-width: 16px;
+                    min-height: 16px;
+                    border: 0.1px solid rgb(178, 176, 176);
+                    align-self: center;
+                    
+                }
+            }
+           
+        }
+    }
+
+   
+

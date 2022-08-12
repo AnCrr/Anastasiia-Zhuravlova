@@ -76,7 +76,7 @@ class ModalCartItem extends Component {
           <span className="modal__cart-item__price">{this.renderPrices()}</span>
 
           <Attributes
-            className="attributes__modal"
+            className="attributes--modal"
             attributes={attributes}
             activeAttributes={activeAttributes}
             isProduct={false}

@@ -83,7 +83,6 @@ class CartItem extends Component {
     const { activeIdx } = this.state;
     return (
       <div className="cart-item">
-        <div className="border"></div>
         <div className="cart-item__content">
           <div className="cart-item__info">
             <div className="cart-item__title">
@@ -125,8 +124,6 @@ class CartItem extends Component {
             </div>
           </div>
         </div>
-
-        <div className="border"></div>
       </div>
     );
   }

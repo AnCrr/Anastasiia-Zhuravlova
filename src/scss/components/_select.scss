@@ -49,6 +49,8 @@
           
             ul{ 
                 padding: 15px 0;
+                z-index: 6;
+                background-color: white;
 
                 li{
                     display: flex;
@@ -59,7 +61,7 @@
                     min-height: 45px;
                     max-width: 114px;
                     max-height: 45px;
-                    text-align: center;
+                    text-align: left;
 
                     &:hover {
                         background: rgba(36, 36, 36, 0.05);

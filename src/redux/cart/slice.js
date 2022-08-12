@@ -20,7 +20,7 @@ const cartSlice = createSlice({
       state.totalPrice = calcTotalPrice(state.items);
     },
     removeProduct(state, action) {
-      state.items = removeProductInRedux(state.items, action.payload);
+      removeProductInRedux(state.items, action.payload);
       state.totalPrice = calcTotalPrice(state.items);
     },
     openModal(state, action) {

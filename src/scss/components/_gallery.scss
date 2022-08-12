@@ -1,7 +1,7 @@
 .gallery{
     display: flex;
 
-    &__active-image{
+    &__main{
         min-width: 610px;
         max-width: 610px;
         max-height: 511px;
@@ -15,25 +15,23 @@
         }
     }
     
-    &__images{
+    &__slider{
         min-width: 55px;
         display: flex;
         flex-direction: column;
         margin: -20px 0;
+    }
 
-        &--wrapper{
-            min-width: 80px;
-            min-height: 80px;
+    &__item{
+        min-width: 80px;
+        min-height: 80px;
 
-            img{
-                cursor: pointer;
-                max-width: 80px;
-                max-height: 80px;
-                margin: 20px 0;
-            }
+        img{
+            cursor: pointer;
+            max-width: 80px;
+            max-height: 80px;
+            margin: 20px 0;
         }
-    
-        
     }
     
 }
