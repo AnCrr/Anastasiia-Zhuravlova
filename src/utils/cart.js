@@ -74,3 +74,10 @@ export const removeProduct = (cart, product) => {
 export const calcTotalCount = (items) => {
   return items.reduce((sum, item) => sum + item.count, 0);
 };
+
+export const getCurrencySymbol = (currencies) => {
+  const currency = currencies.find(
+    (currency) => currency.label === getCookie("activeCurrency")
+  );
+  return currency?.symbol;
+};

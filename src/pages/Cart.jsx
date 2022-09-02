@@ -5,8 +5,7 @@ import PropTypes from "prop-types";
 import { cartSelector } from "../redux/cart/selectors";
 import { filterSelector } from "../redux/filter/selectors";
 import CartItem from "../components/CartItem";
-import { calcTotalCount } from "../utils/cart";
-import { getCookie } from "../utils/cookies";
+import { calcTotalCount, getCurrencySymbol } from "../utils/cart";
 import { CART, TAX, QUANTITY, TOTAL, ORDER } from "../constants";
 import { formatPrice } from "../utils/formatPrice";
 
@@ -62,6 +61,7 @@ class Cart extends Component {
     const { totalCount } = this.state;
     const { cartItems, totalPrice, currencies } = this.props;
     const tax = Number((totalPrice * 21) / 100);
+
     return (
       <div className="cart">
         <div className="cart__title">
@@ -88,11 +88,7 @@ class Cart extends Component {
               <p>{formatPrice(tax)}</p>
               <p>{totalCount}</p>
               <p>
-                {currencies.map((currency) => {
-                  if (currency.label === getCookie("activeCurrency")) {
-                    return currency.symbol;
-                  }
-                })}
+                {getCurrencySymbol(currencies)}
                 {formatPrice(totalPrice)}
               </p>
             </div>
