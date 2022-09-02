@@ -13,6 +13,7 @@ import { getCookie } from "../utils/cookies";
 import { filterSelector } from "../redux/filter/selectors";
 import { MY_BAG, TOTAL, VIEW_BAG, CHECK_OUT } from "../constants";
 import { EmptyCart } from "./EmptyCart";
+import { formatPrice } from "../utils/formatPrice";
 
 const mapStateToProps = (state) => ({
   cartItems: cartSelector(state).items,
@@ -115,8 +116,9 @@ class ModalCart extends Component {
                 if (currency.label === getCookie("activeCurrency")) {
                   return currency.symbol;
                 }
+                return null;
               })}
-              {totalPrice}
+              {formatPrice(totalPrice)}
             </p>
           </div>
           <div className="modal__content-bottom">

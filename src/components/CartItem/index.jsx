@@ -81,6 +81,7 @@ class CartItem extends Component {
     const { brand, name, attributes, count, gallery, activeAttributes } =
       this.props.cartItem;
     const { activeIdx } = this.state;
+
     return (
       <div className="cart-item">
         <div className="cart-item__content">
@@ -113,14 +114,16 @@ class CartItem extends Component {
             </div>
             <div className="cart-item__image">
               <img src={gallery[activeIdx]} alt="product" />
-              <div className="cart-item__image--arrows">
-                <div onClick={() => this.handleClickLeftArrow()}>
-                  <ArrowIcon rotate={0} />
+              {gallery.length > 1 && (
+                <div className="cart-item__image--arrows">
+                  <div onClick={() => this.handleClickLeftArrow()}>
+                    <ArrowIcon rotate={0} />
+                  </div>
+                  <div onClick={() => this.handleClickRightArrow()}>
+                    <ArrowIcon rotate={180} />
+                  </div>
                 </div>
-                <div onClick={() => this.handleClickRightArrow()}>
-                  <ArrowIcon rotate={180} />
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

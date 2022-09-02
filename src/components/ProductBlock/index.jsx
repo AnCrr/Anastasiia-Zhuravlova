@@ -8,6 +8,7 @@ import { addProduct } from "../../redux/cart/slice";
 import { getCookie } from "../../utils/cookies";
 import { OUT_OF_STOCK } from "../../constants";
 import { CartIcon } from "./svg/CartIcon";
+import { formatPrice } from "../../utils/formatPrice";
 
 const mapDispatchToProps = (dispatch) => ({
   addProduct: bindActionCreators(addProduct, dispatch),
@@ -41,7 +42,7 @@ class ProductBlock extends Component {
     return (
       <div
         ref={this.ref}
-        className={`content__products__block ${!inStock && "unactive"}`}
+        className={`content__products__block ${!inStock ? "unactive" : ""}`}
       >
         <div className="content__products__block-image">
           {!inStock && <p>{OUT_OF_STOCK}</p>}
@@ -65,7 +66,7 @@ class ProductBlock extends Component {
                 price.currency.label === getCookie("activeCurrency") && (
                   <p key={index}>
                     {price.currency.symbol}
-                    {price.amount}
+                    {formatPrice(price.amount)}
                   </p>
                 )
             )}

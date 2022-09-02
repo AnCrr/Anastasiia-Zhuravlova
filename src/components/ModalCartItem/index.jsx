@@ -8,6 +8,7 @@ import { addProduct, removeProduct } from "../../redux/cart/slice";
 import Attributes from "../Attributes";
 import { PlusIcon } from "./svg/PlusIcon";
 import { MinusIcon } from "./svg/MinusIcon";
+import { formatPrice } from "../../utils/formatPrice";
 
 const mapStateToProps = (state) => ({
   currency: filterSelector(state).activeCurrency,
@@ -57,7 +58,7 @@ class ModalCartItem extends Component {
         price.currency.label === currency && (
           <p key={index}>
             {price.currency.symbol}
-            {price.amount}
+            {formatPrice(price.amount)}
           </p>
         )
       );
@@ -67,7 +68,6 @@ class ModalCartItem extends Component {
   render() {
     const { brand, name, attributes, activeAttributes, count, gallery } =
       this.props.cartItem;
-
     return (
       <div className="modal__cart-item">
         <div className="modal__cart-item__info">

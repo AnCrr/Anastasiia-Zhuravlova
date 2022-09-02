@@ -12,6 +12,7 @@ import Gallery from "../components/Gallery";
 import { addProduct } from "../redux/cart/slice";
 import Attributes from "../components/Attributes";
 import { ADD_TO_CART, PRICE } from "../constants";
+import { formatPrice } from "../utils/formatPrice";
 
 const mapStateToProps = (state) => ({
   currency: filterSelector(state).activeCurrency,
@@ -89,7 +90,7 @@ class Product extends Component {
     } = this.state.item;
     return (
       <div className="product">
-        <Gallery images={gallery} />
+        <Gallery images={gallery} inStock={inStock} />
         <div className="product__info">
           <div className="product__info--title">
             <h2 className="product__info--title--brand">{brand}</h2>
@@ -111,7 +112,7 @@ class Product extends Component {
                   price.currency.label === this.props.currency && (
                     <p key={index}>
                       {price.currency.symbol}
-                      {price.amount}
+                      {formatPrice(price.amount)}
                     </p>
                   )
                 );

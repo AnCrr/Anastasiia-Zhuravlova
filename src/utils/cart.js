@@ -10,7 +10,7 @@ export const calcTotalPrice = (products) => {
     return accum;
   }, 0);
 
-  return Number(result.toFixed(2));
+  return Number(result);
 };
 
 export const setCartToLs = (products) => {

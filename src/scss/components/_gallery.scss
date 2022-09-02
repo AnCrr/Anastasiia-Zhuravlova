@@ -1,7 +1,12 @@
 .gallery{
     display: flex;
 
+    &.unactive{
+        opacity: 60%;
+    }
+
     &__main{
+        position: relative;
         min-width: 610px;
         max-width: 610px;
         max-height: 511px;
@@ -12,6 +17,15 @@
             max-width: 610px;
             max-height: 511px;
             min-height: 511px;
+        }
+
+        p{
+            position: absolute;
+            left: 30%;
+            top: 50%;
+            text-transform: uppercase;
+            font-size: 34px;
+            opacity: 60%;
         }
     }
     

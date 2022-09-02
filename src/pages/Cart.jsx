@@ -8,6 +8,7 @@ import CartItem from "../components/CartItem";
 import { calcTotalCount } from "../utils/cart";
 import { getCookie } from "../utils/cookies";
 import { CART, TAX, QUANTITY, TOTAL, ORDER } from "../constants";
+import { formatPrice } from "../utils/formatPrice";
 
 const mapStateToProps = (state) => ({
   cartItems: cartSelector(state).items,
@@ -60,7 +61,7 @@ class Cart extends Component {
   render() {
     const { totalCount } = this.state;
     const { cartItems, totalPrice, currencies } = this.props;
-    const tax = Number(((totalPrice * 21) / 100).toFixed(2));
+    const tax = Number((totalPrice * 21) / 100);
     return (
       <div className="cart">
         <div className="cart__title">
@@ -84,7 +85,7 @@ class Cart extends Component {
             </div>
 
             <div className="cart__info--numbers">
-              <p>{tax}</p>
+              <p>{formatPrice(tax)}</p>
               <p>{totalCount}</p>
               <p>
                 {currencies.map((currency) => {
@@ -92,7 +93,7 @@ class Cart extends Component {
                     return currency.symbol;
                   }
                 })}
-                {totalPrice}
+                {formatPrice(totalPrice)}
               </p>
             </div>
           </div>
